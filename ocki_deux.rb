@@ -5,7 +5,7 @@ require 'gosu'
 class Module
   def const_missing(sym)
     require sym.to_s.underscore
-    const_get(sym)
+    c = const_get(sym)
   end
 end
 

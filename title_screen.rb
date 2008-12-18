@@ -29,7 +29,8 @@ class TitleScreen < AbstractScreen
   def button_down(id)
     case id
     when Gosu::KbEscape:  window.close
-    else                  window.next_state = GameScreen.new
+    when Gosu::KbQ:       window.close
+    else                  window.next_state = GameScreen.new('grass')
     end
   end
 end
