@@ -1,15 +1,17 @@
 class GameScreen < AbstractScreen
   def initialize(word)
     super()
-    @word = word
-    @word_font = Game.load_font 'Helvetica', 48
-    @info_font = Game.load_font 'Helvetica', 12
+    @word_control = WordControl.new(word)
   end
   
   def draw
     super
     window.draw_quad(0, 0, 0xffffffff, width, 0, 0xffffffff, 0, height, 0xFFF7D9FF, width, height, 0xFFF7D9FF)
-    @word_font.draw_rel(@word, Game.window.width/2, 10, Layers::UI, 0.5, 0, 1, 1, 0x666666FF, :default)
+    @word_control.draw
+  end
+  
+  def update
+    @word_control.update
   end
   
   def button_down(id)
