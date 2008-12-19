@@ -23,7 +23,7 @@ class WordControl < GameObject
     end
     @selected_index = nil
     
-    @base_word = word
+    @base_word = new_word
     @word = new_word
   end
   
