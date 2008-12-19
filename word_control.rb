@@ -1,7 +1,6 @@
-class WordControl < Button
+class WordControl < AbstractButton
   attr_accessor :word, :width, :height
   include Colored
-  include Positioned
   
   TEXT_COLOR =  Gosu::Color.new 0x996666FF
   HIGHLIGHTED = Gosu::Color.new 0xCC6666FF
@@ -50,10 +49,7 @@ class WordControl < Button
   
   # Returns whether to swallow the event
   def button_up(id)
-    if mouse_within?
-      @click_handler.click(id)
-      true
-    end
+    super(id)
     
     if id == Gosu::KbSpace
       self.reset
