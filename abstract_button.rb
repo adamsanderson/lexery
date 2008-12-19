@@ -1,3 +1,4 @@
+# Requires Positioned's support methods
 class AbstractButton < GameObject
   include Positioned
   
