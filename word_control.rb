@@ -21,8 +21,9 @@ class WordControl < GameObject
       w = @font.text_width(c) 
       cumulative += w
     end
-    @selected_index = nil
     
+    @selected_index = nil
+    @command = nil
     @base_word = new_word
     @word = new_word
   end
@@ -54,7 +55,7 @@ class WordControl < GameObject
       true
     end
     
-    if id == Gosu::KbBackspace || id == Gosu::KbDelete
+    if id == Gosu::KbSpace
       self.reset
     end
   end
@@ -63,7 +64,7 @@ class WordControl < GameObject
     index = nil
     
     @char_offsets.each_with_index do |offset, i|
-      if self.x+offset > x 
+      if self.x+offset > x
         index = i
         break
       end
