@@ -1,4 +1,4 @@
-class WordControl < GameObject
+class WordControl < Button
   attr_accessor :word, :width, :height
   include Colored
   include Positioned
@@ -97,6 +97,10 @@ class WordControl < GameObject
     @command = new_command
     @word = @command.word
     @valid = true
+  end
+  
+  def valid?
+    @valid
   end
   
   def draw
