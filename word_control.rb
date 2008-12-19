@@ -3,7 +3,7 @@ class WordControl < GameObject
   include Colored
   include Positioned
   
-  TEXT_COLOR =  Gosu::Color.new 0x666666FF
+  TEXT_COLOR =  Gosu::Color.new 0x996666FF
   HIGHLIGHTED = Gosu::Color.new 0xCC6666FF
   
   def initialize(word)
@@ -73,9 +73,9 @@ class WordControl < GameObject
     if @selected_index
       top = y
       bottom = y + height
-      left = x + [0, *@char_offsets][@selected_index]
-      right = x + @char_offsets[@selected_index]
-      bg_color = 0xFFFFFFFF
+      left = x + [0, *@char_offsets][@selected_index] - 3
+      right = x + @char_offsets[@selected_index] + 3
+      bg_color = 0xCCFFFFFF
       Game.window.draw_quad(
         left, top,      bg_color, 
         right, top,     bg_color, 
