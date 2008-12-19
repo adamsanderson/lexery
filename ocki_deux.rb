@@ -18,6 +18,14 @@ class String
     tr("-", "_").
     downcase
   end
+  
+  def get(index)
+    chars[index]
+  end
+  
+  def chars
+    self.split(//)
+  end
 end
 
 GameWindow.new.show

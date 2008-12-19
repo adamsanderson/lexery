@@ -20,4 +20,8 @@ class GameScreen < AbstractScreen
     when Gosu::KbQ:       window.close
     end
   end
+  
+  def button_up(id)
+    @word_control.button_up(id)
+  end
 end
