@@ -23,7 +23,12 @@ class WordControl < GameObject
     end
     @selected_index = nil
     
+    @base_word = word
     @word = new_word
+  end
+  
+  def reset
+    self.word = @base_word
   end
   
   def x
@@ -48,6 +53,10 @@ class WordControl < GameObject
       @click_handler.click(id)
       true
     end
+    
+    if id == Gosu::KbBackspace || id == Gosu::KbDelete
+      self.reset
+    end
   end
   
   def clicked(x,y, button)
@@ -70,6 +79,7 @@ class WordControl < GameObject
   
   def draw
     @font.draw(@word, x , y , Layers::UI, 1, 1, @color, :default)
+    
     if @selected_index
       top = y
       bottom = y + height
