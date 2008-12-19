@@ -1,4 +1,5 @@
 module Layers
-  UI = 1000
-  CURSOR = 1500
+  CURSOR     = 1500
+  UI         = 1000
+  BACKGROUND = 200
 end

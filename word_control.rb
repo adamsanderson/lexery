@@ -21,6 +21,7 @@ class WordControl < GameObject
       w = @font.text_width(c) 
       cumulative += w
     end
+    @selected_index = nil
     
     @word = new_word
   end
@@ -50,21 +51,37 @@ class WordControl < GameObject
   end
   
   def clicked(x,y, button)
-    puts "#{x},#{y}, #{button}"
-    index = 0
+    index = nil
+    
     @char_offsets.each_with_index do |offset, i|
-      puts offset
       if self.x+offset > x 
         index = i
         break
       end
     end
     
-    @selected_index = index
-    puts "index: #{@selected_index}, '#{@word.chars[@selected_index]}'"
+    # Clicking the same index again deselects it
+    if @selected_index != index
+      @selected_index = index
+    else
+      @selected_index = nil
+    end
   end
   
   def draw
     @font.draw(@word, x , y , Layers::UI, 1, 1, @color, :default)
+    if @selected_index
+      top = y
+      bottom = y + height
+      left = x + [0, *@char_offsets][@selected_index]
+      right = x + @char_offsets[@selected_index]
+      bg_color = 0xFFFFFFFF
+      Game.window.draw_quad(
+        left, top,      bg_color, 
+        right, top,     bg_color, 
+        left, bottom,   bg_color, 
+        right, bottom,  bg_color, 
+        Layers::BACKGROUND, :default)
+    end
   end
 end  
