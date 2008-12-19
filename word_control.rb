@@ -3,7 +3,8 @@ class WordControl < AbstractButton
   include Colored
   
   TEXT_COLOR =  Gosu::Color.new 0x996666FF
-  HIGHLIGHTED = Gosu::Color.new 0xCC6666FF
+  VALID_COLOR = Gosu::Color.new 0xCC66FF66
+  INVALID_COLOR = Gosu::Color.new 0xCCFF6666
   
   def initialize(word)
     @height = 64
@@ -11,6 +12,14 @@ class WordControl < AbstractButton
     @click_handler = ClickHandler.new{|x,y, button| clicked(x,y, button) }
     self.word = word
     self.color = TEXT_COLOR
+  end
+  
+  def x
+    Game.window.width/2 - @width/2
+  end
+  
+  def y
+    256
   end
   
   def word= new_word
@@ -31,19 +40,11 @@ class WordControl < AbstractButton
     self.word = @base_word
   end
   
-  def x
-    Game.window.width/2 - @width/2
-  end
-  
-  def y
-    256
-  end
-  
   def update
-    if mouse_within?
-      self.color = HIGHLIGHTED
-    else
+    if !has_command?
       self.color = TEXT_COLOR
+    else
+      self.color = valid? ? VALID_COLOR : INVALID_COLOR
     end
   end
   
@@ -92,7 +93,11 @@ class WordControl < AbstractButton
   def command= new_command
     @command = new_command
     @word = @command.word
-    @valid = true
+    @valid = validate @command.word
+  end
+  
+  def validate(word)
+    true
   end
   
   def valid?
