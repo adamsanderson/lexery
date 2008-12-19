@@ -70,12 +70,33 @@ class WordControl < GameObject
       end
     end
     
-    # Clicking the same index again deselects it
+    if index
+      select_char(index)
+    end
+  end
+  
+  def has_command?
+    !!@command
+  end
+  
+  # Select a character.
+  # Clicking the same index again deselects it
+  def select_char(index)
     if @selected_index != index
+      if @selected_index and !has_command?
+        self.command = SwapCommand.new(@base_word, @selected_index, index)
+      end
+      
       @selected_index = index
     else
       @selected_index = nil
     end
+  end
+  
+  def command= new_command
+    @command = new_command
+    @word = @command.word
+    @valid = true
   end
   
   def draw
