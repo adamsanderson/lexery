@@ -32,11 +32,12 @@ class WordControl < AbstractButton
     
     @selected_index = nil
     @command = nil
-    @base_word = new_word
+    @base_word = new_word.clone
     @word = new_word
   end
   
   def reset
+    puts "resetting: #{@word} => #{@base_word}"
     self.word = @base_word
   end
   
@@ -81,7 +82,7 @@ class WordControl < AbstractButton
   def select_char(index)
     if @selected_index != index
       if @selected_index and !has_command?
-        self.command = SwapCommand.new(@base_word, @selected_index, index)
+        self.command = SwapCommand.new(@word, @selected_index, index)
       end
       
       @selected_index = index
