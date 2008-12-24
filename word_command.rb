@@ -4,7 +4,7 @@ class WordCommand
   
   def initialize(word)
     @base_word = word.clone
-    @word = word
+    @word = word.clone
   end
   
   def describe
