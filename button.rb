@@ -7,7 +7,8 @@ class Button < AbstractButton
     @x = x
     @y = y
     @text = text
-    @action = action
+    
+    @action = action if block_given?
     
     @height = options[:height]  || 32
     @font =   options[:font]    || Game.load_font('Helvetica', @height - 4)
@@ -17,7 +18,7 @@ class Button < AbstractButton
   end
   
   def clicked(x,y, button)
-    @action.call(x,y, button)
+    @action.call(x,y, button) if @action
   end
   
   def draw
