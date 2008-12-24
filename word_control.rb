@@ -87,10 +87,9 @@ class WordControl < AbstractButton
   # Select a character.
   # Clicking the same index again deselects it
   def select_char(index)
-    if @selected_index != index
-      if @selected_index
-        self.command = SwapCommand.new(@word, @selected_index, index)      
-      end
+    if @selected_index != index and @selected_index
+      self.command = SwapCommand.new(@word, @selected_index, index)      
+    elsif !@selected_index
       @selected_index = index
     else
       @selected_index = nil
@@ -99,6 +98,7 @@ class WordControl < AbstractButton
   
   # Selecting a letter.
   def letter_pressed(letter)
+    puts letter
     if @selected_index
       self.command = ReplaceCommand.new(@word, @selected_index, letter.downcase)
     end
@@ -110,6 +110,7 @@ class WordControl < AbstractButton
       @word = @command.word
       @status.text = new_command.describe
       @valid = validate @command.word
+      @selected_index = nil
     end
   end
   
