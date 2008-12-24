@@ -5,7 +5,7 @@ class Game
     attr_accessor :window
     
     def state
-      states.last
+      window.state
     end
     
     def load_image(name, options=[])

@@ -1,23 +1,27 @@
-class Button < AbstractButton
+class Label
   attr_reader :x, :y, :width, :height, :text
   
-  def initialize(x,y, text, options={}, &action)
+  def initialize(x,y, text, options={})
     super()
     
     @x = x
     @y = y
     @text = text
-    @action = action
     
     @height = options[:height]  || 32
     @font =   options[:font]    || Game.load_font('Helvetica', @height - 4)
     @width =  options[:width]   || @font.text_width(@text) + 4
     
     @color = options[:color]    || 0x66666666
+    @options = options
   end
   
-  def clicked(x,y, button)
-    @action.call(x,y, button)
+  def text= new_text
+    @text = new_text
+    @width = @font.text_width(@text) + 4 unless @options[:width]
+  end
+  
+  def update
   end
   
   def draw

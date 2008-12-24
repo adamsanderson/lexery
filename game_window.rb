@@ -1,5 +1,5 @@
 class GameWindow < Gosu::Window
-  attr_reader :font
+  attr_reader :state
   attr_writer :next_state
   
   def initialize()

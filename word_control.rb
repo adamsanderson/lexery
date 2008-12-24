@@ -1,17 +1,19 @@
 class WordControl < AbstractButton
   attr_accessor :word, :width, :height
+  attr_reader :command
   include Colored
   
   TEXT_COLOR =  Gosu::Color.new 0x996666FF
   VALID_COLOR = Gosu::Color.new 0xCC66FF66
   INVALID_COLOR = Gosu::Color.new 0xCCFF6666
   
-  def initialize(word)
+  def initialize(word, status)
     @height = 64
     @font = Game.load_font 'Helvetica', @height
     @click_handler = ClickHandler.new{|x,y, button| clicked(x,y, button) }
     self.word = word
     self.color = TEXT_COLOR
+    @status = status
   end
   
   def x
@@ -53,6 +55,11 @@ class WordControl < AbstractButton
   def button_up(id)
     super(id)
     
+    # if letter pressed
+    if letter = Game.window.button_id_to_char(id)
+      letter_pressed(letter)
+    end
+    
     if id == Gosu::KbSpace
       self.reset
     end
@@ -91,9 +98,17 @@ class WordControl < AbstractButton
     end
   end
   
+  # Selecting a letter.
+  def letter_pressed(letter)
+    if @selected_index
+      self.command = ReplaceCommand.new(@word, @selected_index, letter.downcase)
+    end
+  end
+  
   def command= new_command
     @command = new_command
     @word = @command.word
+    @status.text = new_command.describe
     @valid = validate @command.word
   end
   

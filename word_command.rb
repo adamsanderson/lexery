@@ -3,7 +3,7 @@ class WordCommand
   attr_reader :word
   
   def initialize(word)
-    @base_word = word
+    @base_word = word.clone
     @word = word
   end
   

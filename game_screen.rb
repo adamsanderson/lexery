@@ -1,7 +1,9 @@
 class GameScreen < AbstractScreen
   def initialize(word)
     super()
-    @word_control = WordControl.new(word)
+    
+    @status = Label.new(10, self.height - 32, :height=>32)
+    @word_control = WordControl.new(word, @status)
     @reset_button = Button.new(@word_control.left, @word_control.bottom + 10, 'reset') do
       @word_control.reset
     end
@@ -13,11 +15,13 @@ class GameScreen < AbstractScreen
     window.draw_quad(0, 0, 0xffffffff, width, 0, 0xffffffff, 0, height, 0xFFF7D9FF, width, height, 0xFFF7D9FF)
     @word_control.draw
     @reset_button.draw
+    @status.draw
   end
   
   def update
     @word_control.update
     @reset_button.update
+    @status.update
   end
   
   def button_down(id)
