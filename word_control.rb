@@ -1,15 +1,16 @@
 class WordControl < Gosu::TextInput
   attr_accessor :x, :y
   attr_accessor :word, :width, :height
-  attr_reader :command
-  include Colored
+  attr_reader   :command
+  attr_accessor :valid
+  
   include Positioned
   
   CARET_COLOR = Gosu::Color.new 0x996666FF
   TEXT_COLOR =  Gosu::Color.new 0x996666FF
   VALID_COLOR = Gosu::Color.new 0xCC66FF66
   INVALID_COLOR = Gosu::Color.new 0xCCFF6666
-  SELECTION_COLOR = Gosu::Color.new 0xcc0000ff
+  SELECTION_COLOR = Gosu::Color.new 0x330000FF
   
   def initialize(x,y,word)
     super()
@@ -18,7 +19,7 @@ class WordControl < Gosu::TextInput
     @font = Game.load_font 'Helvetica', @height
     self.word = word
     self.text = word
-    self.color = TEXT_COLOR
+
     @x = x
     @y = y
   end
@@ -32,14 +33,6 @@ class WordControl < Gosu::TextInput
     self.text = @word
   end
    
-  def validate(word)
-    true
-  end
-  
-  def valid?
-    @valid
-  end
-  
   def update
     
   end
@@ -60,7 +53,13 @@ class WordControl < Gosu::TextInput
     Game.window.draw_line(pos_x, y,          CARET_COLOR,
                       pos_x, y + height, CARET_COLOR, 
                       Layers::UI)
+
+    if self.word == self.text
+      color = TEXT_COLOR
+    else
+      color = valid ? VALID_COLOR : INVALID_COLOR
+    end
     
-    @font.draw(self.text, x , y , Layers::UI, 1, 1, @color, :default)
+    @font.draw(self.text, x , y , Layers::UI, 1, 1, color, :default)
   end
 end  

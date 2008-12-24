@@ -2,10 +2,13 @@ class GameScreen < AbstractScreen
   def initialize(word)
     super()
     
+    @rules = GameRules.new
+    
     @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
+    
     @word_control = WordControl.new(320, 256, word)
     Game.window.text_input = @word_control
-    
+
     @reset_button = Button.new(@word_control.left, @word_control.bottom + 10, 'reset') do
       @word_control.reset
     end
@@ -24,6 +27,10 @@ class GameScreen < AbstractScreen
   end
   
   def update
+    # todo: make this into an event/listener
+    valid_transition = @rules.valid_transition? @word_control.word, @word_control.text
+    @word_control.valid = valid_transition
+    
     @word_control.update
     @reset_button.update
     @ok_button.update
