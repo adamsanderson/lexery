@@ -56,11 +56,14 @@ class WordControl < AbstractButton
     super(id)
     
     # if letter pressed
-    if letter = Game.window.button_id_to_char(id)
+    letter = Game.window.button_id_to_char(id)
+    if letter and letter =~ /[az]/
       letter_pressed(letter)
-    end
-    
-    if id == Gosu::KbSpace
+      
+    elsif id == Gosu::KbDelete || id == Gosu::KbBackspace
+      del_pressed()
+      
+    elsif id == Gosu::KbSpace
       self.reset
     end
   end
@@ -98,9 +101,15 @@ class WordControl < AbstractButton
   
   # Selecting a letter.
   def letter_pressed(letter)
-    puts letter
     if @selected_index
-      self.command = ReplaceCommand.new(@word, @selected_index, letter.downcase)
+      self.command = ReplaceCommand.new(@word, @selected_index, letter)
+    end
+  end
+  
+  # Removing a letter
+  def del_pressed
+    if @selected_index
+      self.command = RemoveCommand.new(@word, @selected_index)
     end
   end
   
