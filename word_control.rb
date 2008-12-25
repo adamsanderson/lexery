@@ -27,6 +27,7 @@ class WordControl < Gosu::TextInput
   def word= new_word
     @width = @font.text_width(new_word)
     @word = new_word
+    @valid = false
   end
   
   def reset

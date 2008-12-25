@@ -14,6 +14,7 @@ class GameScreen < AbstractScreen
     @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
     @score =  Label.new(10, 10, "words: 0", :height=>16)
     @imaginary_label =  Label.new(10, @score.bottom + 2, "imaginary words remaining: #{@imaginary_count}", :height=>16)
+    @timer = Timer.new(self.width - 32, 10, Game.options['duration'])
     
     @word_control = WordControl.new(320, 256, word)
     Game.window.text_input = @word_control
@@ -38,6 +39,7 @@ class GameScreen < AbstractScreen
     end
     
     message "Welcome"
+    @timer.start
   end
   
   def draw
@@ -49,6 +51,7 @@ class GameScreen < AbstractScreen
     @status.draw
     @score.draw
     @imaginary_label.draw
+    @timer.draw
     
     @messages.each do |m|
       m.draw
@@ -89,10 +92,16 @@ class GameScreen < AbstractScreen
     @status.update
     @score.update
     @imaginary_label.update
+    @timer.update
     
     @messages.each do |m|
       @messages.delete m if m.update == false
     end
+    
+    if @timer.remaining == 0
+      puts "game over"
+    end
+    
   end
   
   def button_down(id)

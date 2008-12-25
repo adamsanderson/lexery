@@ -2,3 +2,4 @@
 - default:
     dictionary: "wordlists/TWL06.db"
     imaginary_words: 3
+    duration: 60
