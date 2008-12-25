@@ -29,8 +29,23 @@ class GameScreen < AbstractScreen
   
   def update
     # todo: make this into an event/listener
-    valid_transition = @rules.valid_transition? @word_control.word, @word_control.text
-    @word_control.valid = valid_transition
+    # todo: make this into the rules object
+    unless @last_word == @word_control.text 
+      @valid_transition = @rules.valid_transition? @word_control.word, @word_control.text
+      @valid_word = @dictionary.valid_word? @word_control.text
+      @last_word = @word_control.text
+      @word_control.valid = @valid_transition && @valid_word
+      
+      @status.text = if @word_control.word == @word_control.text
+        "Add, remove, or change one letter to create a new word"
+      elsif !@valid_transition
+        "You may only add, remove, or change one letter"
+      elsif !@valid_word
+        "'#{@word_control.text}' is not in the dictionary"
+      else
+        "Click 'ok', or hit 'enter' to use this word"
+      end
+    end
     
     @word_control.update
     @reset_button.update
