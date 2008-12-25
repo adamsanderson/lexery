@@ -18,7 +18,9 @@ class TitleScreen < AbstractScreen
       "You are allowed a limited number of imaginary words to help you get to new words.",
       "One last rule, once you make a word, you cannot use it again.",
       "",
-      "Click to begin!"
+      "Click to begin!",
+      "",
+      "More to come, no seriously, ask me in a week or so!"
     ]
     
     rules.each_with_index do |rule, i|
