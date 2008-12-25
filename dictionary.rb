@@ -9,6 +9,6 @@ class Dictionary
   end
   
   def pick(length=5)
-    'grass'
+    @words.filter("length(word) = #{length}").all.first
   end
 end
