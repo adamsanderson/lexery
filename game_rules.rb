@@ -1,4 +1,5 @@
 class GameRules
+  # TODO: allow swaps
   def valid_transition?(old_word, new_word)
     distance(old_word, new_word) == 1
   end

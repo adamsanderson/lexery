@@ -1,5 +1,5 @@
 class Button < AbstractButton
-  attr_reader :x, :y, :width, :height, :text
+  attr_reader :x, :y, :width, :height, :text, :action
   
   def initialize(x,y, text, options={}, &action)
     super()
