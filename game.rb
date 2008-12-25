@@ -36,7 +36,13 @@ class Game
     end
     
     def db
-      @db ||= @db = Sequel.sqlite(File.join(ROOT, 'wordlists', 'words.db'))
+      unless @db
+        @db = Sequel.sqlite(File.join(ROOT, 'game.db'))
+        wordlist = File.join(ROOT, 'wordlists', 'words.db')
+        @db << "attach '#{wordlist}' as wordlist"
+      end
+      @db
+      
     end
     
   end
