@@ -4,6 +4,8 @@ class GameScreen < AbstractScreen
     
     @rules = GameRules.new
     @dictionary = Dictionary.new(Game.options['dictionary'])
+    word ||= @dictionary.pick
+    
     @imaginary_count = Game.options['imaginary_words']
     
     @words = []

@@ -7,4 +7,8 @@ class Dictionary
   def valid_word?(word)
     @words.filter(:word=>word.downcase).count == 1
   end
+  
+  def pick(length=5)
+    'grass'
+  end
 end
