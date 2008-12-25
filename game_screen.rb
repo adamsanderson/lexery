@@ -3,6 +3,7 @@ class GameScreen < AbstractScreen
     super()
     
     @rules = GameRules.new
+    @dictionary = Dictionary.new(Game.options['dictionary'])
     
     @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
     

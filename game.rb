@@ -26,5 +26,14 @@ class Game
       @fonts[[name,size]] ||= Gosu::Font.new window, name, size
     end
     
+    def options_set
+      "default"
+    end
+    
+    def options
+      @options ||= YAML.load_file(File.join(ROOT, 'options.yml'))
+      @options[options_set]
+    end
+    
   end
 end
