@@ -3,7 +3,7 @@ class GameOverScreen < AbstractScreen
     super()
     @title_font = Game.load_font 'Helvetica', 48
     
-    @score = Label.new(320, 256, "'#{initial_word}: #{history.length}'")
+    @score = Label.new(320, 256-32, "'#{initial_word}' #{history.length} words")
     
     @new_game = Button.new(320, 256, "New Game") do
       window.next_state = GameScreen.new()
@@ -19,11 +19,13 @@ class GameOverScreen < AbstractScreen
     window.draw_quad(0, 0, 0xffffffff, width, 0, 0xffffffff, 0, height, 0xFFF7D9FF, width, height, 0xFFF7D9FF)
     @title_font.draw_rel("OckiDeux Game Over", Game.window.width/2, 10, Layers::UI, 0.5, 0, 1, 1, 0x666666FF, :default)
     
+    @score.draw
     @new_game.draw
     @replay_game.draw
   end
   
   def update
+    @score.update
     @new_game.update
     @replay_game.update
   end
