@@ -4,11 +4,14 @@ class GameScreen < AbstractScreen
     
     @rules = GameRules.new
     @dictionary = Dictionary.new(Game.options['dictionary'])
+    @imaginary_count = Game.options['imaginary_words']
+    
     @words = []
     @messages = []
     
     @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
     @score =  Label.new(10, 10, "words: 0", :height=>16)
+    @imaginary_label =  Label.new(10, @score.bottom + 2, "imaginary words remaining: #{@imaginary_count}", :height=>16)
     
     @word_control = WordControl.new(320, 256, word)
     Game.window.text_input = @word_control
@@ -18,15 +21,21 @@ class GameScreen < AbstractScreen
     end
     
     @ok_button = Button.new(@reset_button.right + 12, @word_control.bottom + 10, 'ok') do
-      if @word_control.valid
+      if @word_control.valid || @imaginary_word
+        if @imaginary_word
+          @imaginary_count -= 1 
+          @imaginary_label.text = "imaginary words remaining: #{@imaginary_count}"
+        end
+        
         word = @word_control.text
         @words << word
         @score.text = "words: #{@words.length}"
+        message word, :color=>(@imaginary_word ? Gosu::Color.new(128, 255,0,0) : nil )
         @word_control.word = word
       end
     end
     
-    @messages << FadingMessage.new(320, 256-32, "Welcome")
+    message "Welcome"
   end
   
   def draw
@@ -37,6 +46,7 @@ class GameScreen < AbstractScreen
     @ok_button.draw
     @status.draw
     @score.draw
+    @imaginary_label.draw
     
     @messages.each do |m|
       m.draw
@@ -50,11 +60,14 @@ class GameScreen < AbstractScreen
       @valid_transition = @rules.valid_transition? @word_control.word, @word_control.text
       @valid_word = @dictionary.valid_word? @word_control.text
       @last_word = @word_control.text
+      @changed_word = @word_control.word != @word_control.text
       @new_word = !@words.include?(@word_control.text)
       
-      @word_control.valid = @valid_transition && @valid_word && @new_word
+      @word_control.valid = @valid_transition && @valid_word && @new_word && @changed_word
+      @imaginary_word = @valid_transition && @new_word && @changed_word && !@valid_word && @imaginary_count > 0
       
-      @status.text = if @word_control.word == @word_control.text
+      
+      @status.text = if !@changed_word
         "Add, remove, or change one letter to create a new word"
       elsif !@valid_transition
         "You may only add, remove, or change one letter"
@@ -73,6 +86,7 @@ class GameScreen < AbstractScreen
     @ok_button.update
     @status.update
     @score.update
+    @imaginary_label.update
     
     @messages.each do |m|
       @messages.delete m if m.update == false
@@ -91,5 +105,9 @@ class GameScreen < AbstractScreen
   def button_up(id)
     @reset_button.button_up(id)
     @ok_button.button_up(id)
+  end
+  
+  def message(text, options={})
+    @messages << FadingMessage.new(320, 256-32, text, options)
   end
 end

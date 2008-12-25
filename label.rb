@@ -1,5 +1,6 @@
 class Label
   attr_reader :x, :y, :width, :height, :text
+  include Positioned
   
   def initialize(x,y, text, options={})
     super()

@@ -13,7 +13,7 @@ class FadingMessage
     @height = options[:height]  || 32
     @font =   options[:font]    || Game.load_font('Helvetica', @height - 4)
     @width =  options[:width]   || @font.text_width(@text) + 4
-    @color =  Gosu::Color.new 0xCC6666FF
+    @color =  options[:color]   || Gosu::Color.new(0xCC6666FF)
     
     @duration = options[:duration] || 3000 # 3 seconds
     @target_y = 0 - @height
@@ -29,8 +29,6 @@ class FadingMessage
   end
   
   def draw
-    puts @p
-    
     color = Gosu::Color.new(
       (@color.alpha*@p).to_i, 
       @color.red,
