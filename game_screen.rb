@@ -5,6 +5,7 @@ class GameScreen < AbstractScreen
     @rules = GameRules.new
     @dictionary = Dictionary.new(Game.options['dictionary'])
     @words = []
+    @messages = []
     
     @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
     @score =  Label.new(10, 10, "words: 0", :height=>16)
@@ -25,6 +26,7 @@ class GameScreen < AbstractScreen
       end
     end
     
+    @messages << FadingMessage.new(320, 256-32, "Welcome")
   end
   
   def draw
@@ -35,6 +37,10 @@ class GameScreen < AbstractScreen
     @ok_button.draw
     @status.draw
     @score.draw
+    
+    @messages.each do |m|
+      m.draw
+    end
   end
   
   def update
@@ -67,6 +73,10 @@ class GameScreen < AbstractScreen
     @ok_button.update
     @status.update
     @score.update
+    
+    @messages.each do |m|
+      @messages.delete m if m.update == false
+    end
   end
   
   def button_down(id)
