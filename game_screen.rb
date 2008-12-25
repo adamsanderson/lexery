@@ -4,7 +4,7 @@ class GameScreen < AbstractScreen
     
     @rules = GameRules.new
     @dictionary = Dictionary.new(Game.options['dictionary'])
-    word ||= @dictionary.pick
+    @initial_word = word || @dictionary.pick
     
     @imaginary_count = Game.options['imaginary_words']
     
@@ -16,7 +16,7 @@ class GameScreen < AbstractScreen
     @imaginary_label =  Label.new(10, @score.bottom + 2, "imaginary words remaining: #{@imaginary_count}", :height=>16)
     @timer = Timer.new(self.width - 32, 10, Game.options['duration'])
     
-    @word_control = WordControl.new(320, 256, word)
+    @word_control = WordControl.new(320, 256, @initial_word)
     Game.window.text_input = @word_control
 
     @reset_button = Button.new(@word_control.left, @word_control.bottom + 10, 'reset') do
@@ -98,16 +98,19 @@ class GameScreen < AbstractScreen
       @messages.delete m if m.update == false
     end
     
-    if @timer.remaining == 0
-      puts "game over"
-    end
-    
+    game_over if @timer.remaining == 0    
+  end
+  
+  def game_over
+    window.next_state = GameOverScreen.new(@initial_word, @words)
   end
   
   def button_down(id)
     case id
     when Gosu::KbReturn, Gosu::KbEnter then 
       @ok_button.action.call(0,0,0)
+    when Gosu::KbTab then
+      game_over
     when Gosu::KbEscape then  
       window.next_state = TitleScreen.new
     end
