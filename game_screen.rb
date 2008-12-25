@@ -1,5 +1,5 @@
 class GameScreen < AbstractScreen
-  def initialize(word)
+  def initialize(word=nil)
     super()
     
     @rules = GameRules.new

@@ -9,6 +9,8 @@ class Dictionary
   end
   
   def pick(length=5)
-    @words.filter("length(word) = #{length}").all.first
+    words = @words.filter("length(word) = #{length}").all
+    entry = words[rand(words.length)]
+    entry[:word]
   end
 end

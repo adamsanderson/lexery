@@ -30,7 +30,7 @@ class TitleScreen < AbstractScreen
     case id
     when Gosu::KbEscape:  window.close
     when Gosu::KbQ:       window.close
-    else                  window.next_state = GameScreen.new('grass')
+    else                  window.next_state = GameScreen.new()
     end
   end
 end
