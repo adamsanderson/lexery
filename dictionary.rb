@@ -1,7 +1,6 @@
 class Dictionary
-  def initialize(db_path)
-    @db = Sequel.sqlite(db_path)
-    @words = @db[:words]
+  def initialize()
+    @words = Game.db[:words]
   end
   
   def valid_word?(word)

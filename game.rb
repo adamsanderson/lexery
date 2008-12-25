@@ -35,5 +35,9 @@ class Game
       @options[options_set]
     end
     
+    def db
+      @db ||= @db = Sequel.sqlite(File.join(ROOT, 'wordlists', 'words.db'))
+    end
+    
   end
 end

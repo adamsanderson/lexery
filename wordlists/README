@@ -1,0 +1,5 @@
+This directory contains the game's wordlist.
+You may create a new wordlist using:
+  ruby build_wordlist.rb <input_file>
+
+OckiDeux will look for a words.db here.
