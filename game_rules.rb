@@ -1,7 +1,14 @@
 class GameRules
   # TODO: allow swaps
   def valid_transition?(old_word, new_word)
-    distance(old_word, new_word) == 1
+    d = distance(old_word, new_word)
+    case d
+    when 1 then true
+    when 2 then 
+      old_word.chars.sort == new_word.chars.sort
+    else
+      false
+    end
   end
   
   def distance(str1, str2)
