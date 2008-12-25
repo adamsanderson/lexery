@@ -40,6 +40,7 @@ class GameScreen < AbstractScreen
     end
     
     message "Welcome"
+    @started = Time.now
     @timer.start
   end
   
@@ -103,7 +104,8 @@ class GameScreen < AbstractScreen
   end
   
   def game_over
-    window.next_state = GameOverScreen.new(@initial_word, @words)
+    round = Round.create(:started=>@started, :score=>@words.length, :initial_word=>@initial_word, :words=>@words.join(','))
+    window.next_state = GameOverScreen.new(round)
   end
   
   def button_down(id)

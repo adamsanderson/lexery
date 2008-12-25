@@ -1,16 +1,16 @@
 class GameOverScreen < AbstractScreen
-  def initialize(initial_word, history)
+  def initialize(round)
     super()
     @title_font = Game.load_font 'Helvetica', 48
     
-    @score = Label.new(320, 256-32, "'#{initial_word}' #{history.length} words")
+    @score = Label.new(320, 256-32, "'#{round.initial_word}' #{round.score} words")
     
     @new_game = Button.new(320, 256, "New Game") do
       window.next_state = GameScreen.new()
     end
     
     @replay_game = Button.new(320, @new_game.bottom + 4, "Try Again") do
-      window.next_state = GameScreen.new(initial_word)
+      window.next_state = GameScreen.new(round.initial_word)
     end
   end
 
