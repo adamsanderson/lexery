@@ -3,9 +3,10 @@ class GameOverScreen < AbstractScreen
     super()
     @title_font = Game.load_font 'Helvetica', 48
     
-    @score = Label.new(320, 256-32, "'#{round.initial_word}' #{round.score} words")
+    @score = Label.new(320, 256, "'#{round.initial_word}' #{round.score} words")
+    @words = round.words.split(',')
     
-    @new_game = Button.new(320, 256, "New Game") do
+    @new_game = Button.new(320, @score.bottom + 4, "New Game") do
       window.next_state = GameScreen.new()
     end
     

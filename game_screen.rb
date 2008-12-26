@@ -13,8 +13,8 @@ class GameScreen < AbstractScreen
     @messages = []
     
     @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
-    @score =  Label.new(10, 10, "words: 0", :height=>16)
-    @imaginary_label =  Label.new(10, @score.bottom + 2, "imaginary words remaining: #{@imaginary_count}", :height=>16)
+    @score =  Label.new(10, 10, :height=>16){"words: #{@words.length}"}
+    @imaginary_label =  Label.new(10, @score.bottom + 2, :height=>16){ "imaginary words remaining: #{@imaginary_count}" }
     @timer = Timer.new(self.width - 32, 10, Game.options['duration'])
     
     @word_control = WordControl.new(320, 256, @initial_word)
@@ -27,13 +27,11 @@ class GameScreen < AbstractScreen
     @ok_button = Button.new(@reset_button.right + 12, @word_control.bottom + 10, 'ok') do
       if @word_control.valid || @imaginary_word
         if @imaginary_word
-          @imaginary_count -= 1 
-          @imaginary_label.text = "imaginary words remaining: #{@imaginary_count}"
+          @imaginary_count -= 1
         end
         
         word = @word_control.text
         @words << word
-        @score.text = "words: #{@words.length}"
         message word, :color=>(@imaginary_word ? Gosu::Color.new(128, 255,0,0) : nil )
         @word_control.word = word
       end
