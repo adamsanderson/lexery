@@ -17,7 +17,11 @@ class GameScreen < AbstractScreen
     add @timer = Timer.new(1000){|ticks|
       remaining = @duration - ticks
       remaining_label.text = remaining
-      remaining_label.color = Gosu::Color.new(128, 255,0,0) if remaining <= 10
+      case remaining
+        when 10: remaining_label.color = Colors::WARNING
+        when 5:  message "5 seconds remaining", :color=>Colors::WARNING
+        when 3,2,1:  message "#{remaining}",    :color=>Colors::WARNING
+      end
     } 
     
     add @word_control = WordControl.new(320, 256, @initial_word)
