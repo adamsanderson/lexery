@@ -7,6 +7,10 @@ class GameOverScreen < AbstractScreen
     title.x = Game.window.width/2 - title.width/2
     
     add score = Label.new(320, 256, "'#{round.initial_word}' #{round.score} words")
+    add Timer.new(2500){|ticks|
+      add FadingMessage.new(320, score.top-32, words[words.length % ticks])
+    }
+    
     add new_game = Button.new(score.left, score.bottom + 4, "New Game"){
       window.next_state = GameScreen.new()
     }
