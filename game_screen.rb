@@ -68,7 +68,7 @@ class GameScreen < AbstractScreen
       
     end
     
-    game_over if @timer.ticks >= Game.options['duration']    
+    game_over if @timer.ticks >= Game.options['duration']
   end
   
   def accept

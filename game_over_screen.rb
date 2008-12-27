@@ -7,8 +7,8 @@ class GameOverScreen < AbstractScreen
     title.x = Game.window.width/2 - title.width/2
     
     add score = Label.new(320, 256, "'#{round.initial_word}' #{round.score} words")
-    add Timer.new(2500){|ticks|
-      add FadingMessage.new(320, score.top-32, words[words.length % ticks])
+    add timer = Timer.new(1000){|ticks|
+      add FadingMessage.new(320, score.top-32, words[(ticks+1) % words.length], :color=>Colors::FADED)
     }
     
     add new_game = Button.new(score.left, score.bottom + 4, "New Game"){
@@ -18,6 +18,7 @@ class GameOverScreen < AbstractScreen
     add replay_game = Button.new(new_game.left, new_game.bottom + 4, "Try Again"){
       window.next_state = GameScreen.new(round.initial_word)
     }
+    timer.start
   end
   
   def button_down(id)
