@@ -18,7 +18,7 @@ class Button < GameObject
     @font =   options[:font]    || Game.load_font('Helvetica', @height - 4)
     @width =  options[:width]   || @font.text_width(@text) + 4
     
-    @color = options[:color]    || 0x66666666
+    @color = options[:color]    || 0x666666CC
   end
   
   def draw

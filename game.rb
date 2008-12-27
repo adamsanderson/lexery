@@ -53,7 +53,6 @@ class Game
         @db << "attach '#{wordlist}' as wordlist"
       end
       @db
-      
     end
     
   end

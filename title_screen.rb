@@ -14,15 +14,20 @@ class TitleScreen < AbstractScreen
     ]
     
     rules.each_with_index{|r,i| add Label.new(32, title.bottom + (i+2) * (14), r, :height=>16) }
-    
+
+    start_buttons = []
     Game.all_options.each_with_index{|option, i|
       key = option.first
-      add new_timed_game = Button.new(320, 256+i*52, key){
+      add button = Button.new(320, 256+i*42, key.capitalize){
         Game.options_set = key
         window.next_state = GameScreen.new
       }
+      start_buttons << button
     }
     
+    add Button.new(start_buttons.last.left, start_buttons.last.bottom + 32, "Statistics"){
+      window.next_state = StatsScreen.new
+    }
   end
     
   def button_down(id)

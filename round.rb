@@ -3,7 +3,7 @@ class Round < Sequel::Model
     primary_key :id
     datetime    :started
     integer     :score
-    integer     :duration
+    string      :options_set
     string      :initial_word
     text        :words # comma separated, lets be lazy
   end

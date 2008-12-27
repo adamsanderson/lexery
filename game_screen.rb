@@ -87,7 +87,7 @@ class GameScreen < AbstractScreen
   def game_over
     round = Round.create(
       :started=>@started,
-      :duration=>@duration,
+      :options_set=>Game.options_set,
       :score=>@words.length, 
       :initial_word=>@initial_word, 
       :words=>@words.join(',')
