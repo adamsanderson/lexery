@@ -1,6 +1,5 @@
 class Label
-  attr_reader :x, :y, :width, :height, :text
-  attr_writer :x, :y
+  attr_accessor :x, :y, :width, :height, :text, :color
   include Positioned
   
   def initialize(x,y, text=nil, options={}, &block)

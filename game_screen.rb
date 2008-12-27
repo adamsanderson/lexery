@@ -7,12 +7,18 @@ class GameScreen < AbstractScreen
     @initial_word = word || @dictionary.pick
     @imaginary_count = Game.options['imaginary_words']    
     @words = []
+    @duration = Game.options['duration']
     
     add @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
     add score = Label.new(10, 10, :height=>16){"words: #{@words.length}"}
     add Label.new(10, score.bottom + 2, :height=>16){ "imaginary words remaining: #{@imaginary_count}" }
+    add remaining_label = Label.new(self.width - 32, 10, @duration)
     
-    add @timer = Timer.new(self.width - 32, 10, Game.options['duration'])
+    add @timer = Timer.new(1000){|ticks|
+      remaining = @duration - ticks
+      remaining_label.text = remaining
+      remaining_label.color = Gosu::Color.new(128, 255,0,0) if remaining <= 10
+    } 
     
     add @word_control = WordControl.new(320, 256, @initial_word)
     
@@ -58,7 +64,7 @@ class GameScreen < AbstractScreen
       
     end
     
-    game_over if @timer.remaining == 0    
+    game_over if @timer.ticks >= Game.options['duration']    
   end
   
   def accept

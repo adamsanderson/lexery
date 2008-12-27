@@ -1,23 +1,28 @@
-class Timer < Label
-  attr_reader :remaining
+class Timer
+  include Publisher
+  events :ticked
+  attr_reader :ticks
   
-  def initialize(x,y, duration, options={})
-    super(x,y, duration.to_s, options)
-    @duration = duration
-    @remaining = duration
+  def initialize(period, &action)
+    @period = period
+    @ticks = nil
+    subscribe(:ticked, self, &action) if block_given?
   end
   
   def start
     @started = Gosu::milliseconds
   end
   
+  def stop
+    @started = nil
+  end
+  
   def update
     if @started
-      seconds = (Gosu::milliseconds - @started) / 1000
-      @remaining = @duration - seconds
-      self.text = remaining.to_s
-      if @remaining < 5
-        @color = Gosu::Color.new(128, 255,0,0)
+      current_ticks = (Gosu::milliseconds - @started) / @period
+      if !@ticks || current_ticks > @ticks
+        @ticks = current_ticks
+        fire_event :ticked, current_ticks
       end
     end
   end
