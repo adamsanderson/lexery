@@ -17,7 +17,6 @@ class GameOverScreen < AbstractScreen
 
   def draw
     super
-    window.draw_quad(0, 0, 0xffffffff, width, 0, 0xffffffff, 0, height, 0xFFF7D9FF, width, height, 0xFFF7D9FF)
     @title_font.draw_rel("OckiDeux Game Over", Game.window.width/2, 10, Layers::UI, 0.5, 0, 1, 1, 0x666666FF, :default)
     
     @score.draw

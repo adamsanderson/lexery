@@ -41,7 +41,6 @@ class Game
         new_db = !File.exists?(db_path)
         @db = Sequel.sqlite(db_path)
         if new_db
-          puts "Initializing score table..."
           Round.create_table
           puts Round.table_exists?
         end

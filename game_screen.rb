@@ -15,6 +15,7 @@ class GameScreen < AbstractScreen
     @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
     @score =  Label.new(10, 10, :height=>16){"words: #{@words.length}"}
     @imaginary_label =  Label.new(10, @score.bottom + 2, :height=>16){ "imaginary words remaining: #{@imaginary_count}" }
+    
     @timer = Timer.new(self.width - 32, 10, Game.options['duration'])
     
     @word_control = WordControl.new(320, 256, @initial_word)
@@ -44,7 +45,6 @@ class GameScreen < AbstractScreen
   
   def draw
     super
-    window.draw_quad(0, 0, 0xffffffff, width, 0, 0xffffffff, 0, height, 0xFFF7D9FF, width, height, 0xFFF7D9FF)
     @word_control.draw
     @reset_button.draw
     @ok_button.draw
@@ -102,7 +102,14 @@ class GameScreen < AbstractScreen
   end
   
   def game_over
-    round = Round.create(:started=>@started, :score=>@words.length, :initial_word=>@initial_word, :words=>@words.join(','))
+    round = Round.create(
+      :started=>@started,
+      :duration=>Game.options['duration'],
+      :score=>@words.length, 
+      :initial_word=>@initial_word, 
+      :words=>@words.join(',')
+    )
+    
     window.next_state = GameOverScreen.new(round)
   end
   
