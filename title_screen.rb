@@ -1,13 +1,8 @@
 class TitleScreen < AbstractScreen
   def initialize
     super
-    @title_font = Game.load_font 'Helvetica', 48
-    @info_font = Game.load_font 'Helvetica', 12
-  end
-  
-  def draw
-    super
-    @title_font.draw_rel("OckiDeux", Game.window.width/2, 10, Layers::UI, 0.5, 0, 1, 1, 0x666666FF, :default)
+    add title = Label.new(10, 10, 'OckiDeux', :color=>0x666666FF, :height=>48)
+    title.x = Game.window.width/2 - title.width/2
     
     rules = [
       "The goal of this game is to make chains of words",
@@ -22,11 +17,9 @@ class TitleScreen < AbstractScreen
       "More to come, no seriously, ask me in a week or so!"
     ]
     
-    rules.each_with_index do |rule, i|
-      @info_font.draw(rule, 32, 68 + (i+1) * (14), Layers::UI, 1,1, 0x66666666, :default)
-    end
+    rules.each_with_index{|r,i| add Label.new(32, title.bottom + (i+2) * (14), r, :color=>0x66666666, :height=>16) }
   end
-  
+    
   def button_down(id)
     case id
     when Gosu::KbEscape:  window.close
