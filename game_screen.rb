@@ -20,18 +20,7 @@ class GameScreen < AbstractScreen
       @word_control.reset
     }
     
-    add @ok_button = Button.new(@reset_button.right + 12, @word_control.bottom + 10, 'ok'){
-      if @word_control.valid || @imaginary_word
-        if @imaginary_word
-          @imaginary_count -= 1
-        end
-        
-        word = @word_control.text
-        @words << word
-        message word, :color=>(@imaginary_word ? Gosu::Color.new(128, 255,0,0) : nil )
-        @word_control.word = word
-      end
-    }
+    add @ok_button = Button.new(@reset_button.right + 12, @word_control.bottom + 10, 'ok'){ accept }
     
     message "Welcome"
     
@@ -72,6 +61,19 @@ class GameScreen < AbstractScreen
     game_over if @timer.remaining == 0    
   end
   
+  def accept
+    if @word_control.valid || @imaginary_word
+      if @imaginary_word
+        @imaginary_count -= 1
+      end
+      
+      word = @word_control.text
+      @words << word
+      message word, :color=>(@imaginary_word ? Gosu::Color.new(128, 255,0,0) : nil )
+      @word_control.word = word
+    end
+  end
+  
   def game_over
     round = Round.create(
       :started=>@started,
@@ -89,7 +91,7 @@ class GameScreen < AbstractScreen
     
     case id
     when Gosu::KbReturn, Gosu::KbEnter then
-      @ok_button.action.call(0,0,0)
+      accept
     when Gosu::KbTab then
       game_over
     when Gosu::KbEscape then  
