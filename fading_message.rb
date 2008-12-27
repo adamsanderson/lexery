@@ -25,7 +25,7 @@ class FadingMessage
     @p = 1 - (Gosu::milliseconds - @started)/(@duration.to_f)
     @y = @target_y + (@start_y - @target_y) * @p
 
-    return @p > 0
+    Game.state.remove self if @p > 0
   end
   
   def draw

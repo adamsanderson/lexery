@@ -4,13 +4,9 @@ class GameScreen < AbstractScreen
     
     @rules = GameRules.new
     @dictionary = Dictionary.new
-    
     @initial_word = word || @dictionary.pick
-    
-    @imaginary_count = Game.options['imaginary_words']
-    
+    @imaginary_count = Game.options['imaginary_words']    
     @words = []
-    @messages = []
     
     add @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
     add score = Label.new(10, 10, :height=>16){"words: #{@words.length}"}
@@ -81,10 +77,6 @@ class GameScreen < AbstractScreen
       
     end
     
-    @messages.each do |m|
-      @messages.delete m if m.update == false
-    end
-    
     game_over if @timer.remaining == 0    
   end
   
@@ -114,6 +106,6 @@ class GameScreen < AbstractScreen
   end
   
   def message(text, options={})
-    @messages << FadingMessage.new(320, 256-32, text, options)
+    add FadingMessage.new(320, 256-32, text, options)
   end
 end
