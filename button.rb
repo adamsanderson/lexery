@@ -1,4 +1,7 @@
 class Button < GameObject
+  HOVER_COLOR_1 = Gosu::Color.new 0x116666FF
+  HOVER_COLOR_2 = Gosu::Color.new 0x0
+  
   include Positioned
   include Publisher
   events :click
@@ -20,9 +23,16 @@ class Button < GameObject
     
     @color = options[:color]    || 0x666666CC
   end
-  
+    
   def draw
     @font.draw(text, x , y , Layers::UI, 1, 1, @color, :default)
+    if mouse_within?
+      Game.window.draw_quad(
+        x-4, y-4,             HOVER_COLOR_1, 
+        x+width, y-4,         HOVER_COLOR_1, 
+        x-4, y+height,        HOVER_COLOR_2, 
+        x+width, y+height,    HOVER_COLOR_2)
+    end
   end
   
   def button_up(id)
