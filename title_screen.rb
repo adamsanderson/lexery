@@ -1,7 +1,7 @@
 class TitleScreen < AbstractScreen
   def initialize
     super
-    add title = Label.new(10, 10, 'OckiDeux', :color=>0x666666FF, :height=>48)
+    add title = Label.new(10, 10, 'OckiDeux', :color=>Colors::HEADER, :height=>48)
     title.x = Game.window.width/2 - title.width/2
     
     rules = [
@@ -17,7 +17,7 @@ class TitleScreen < AbstractScreen
       "More to come, no seriously, ask me in a week or so!"
     ]
     
-    rules.each_with_index{|r,i| add Label.new(32, title.bottom + (i+2) * (14), r, :color=>0x66666666, :height=>16) }
+    rules.each_with_index{|r,i| add Label.new(32, title.bottom + (i+2) * (14), r, :height=>16) }
   end
     
   def button_down(id)

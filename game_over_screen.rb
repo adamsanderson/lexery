@@ -3,7 +3,7 @@ class GameOverScreen < AbstractScreen
     super()
     words = round.words.split(',')
     
-    add title = Label.new(10, 10, 'Game Over', :color=>0x666666FF, :height=>48)
+    add title = Label.new(10, 10, 'Game Over', :color=>Colors::HEADER, :height=>48)
     title.x = Game.window.width/2 - title.width/2
     
     add score = Label.new(320, 256, "'#{round.initial_word}' #{round.score} words")

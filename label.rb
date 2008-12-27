@@ -22,7 +22,6 @@ class Label
     @block = block if block_given?
     
     @color = options[:color]    || 0x66666666
-    
   end
   
   def text= new_text
