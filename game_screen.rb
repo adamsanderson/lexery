@@ -35,6 +35,7 @@ class GameScreen < AbstractScreen
     }
     
     add @ok_button = Button.new(@reset_button.right + 12, @word_control.bottom + 10, 'ok'){ accept }
+    add @done_button = Button.new(width - 64, @status.top, 'done'){ game_over }
     
     message "Welcome"
     
