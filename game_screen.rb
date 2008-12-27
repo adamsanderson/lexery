@@ -39,14 +39,6 @@ class GameScreen < AbstractScreen
     @timer.start
   end
   
-  def draw
-    super
-    
-    @messages.each do |m|
-      m.draw
-    end
-  end
-  
   def update
     super 
     
