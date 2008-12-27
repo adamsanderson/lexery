@@ -51,8 +51,7 @@ class GameScreen < AbstractScreen
       @new_word = !@words.include?(@word_control.text)
       
       @word_control.valid = @valid_transition && @valid_word && @new_word && @changed_word
-      @imaginary_word = @valid_transition && @new_word && @changed_word && !@valid_word && @imaginary_count > 0
-      
+      @imaginary_word = @valid_transition && @new_word && @changed_word && !@valid_word
       
       @status.text = if !@changed_word
         "Add, remove, or change one letter to create a new word"
@@ -72,7 +71,7 @@ class GameScreen < AbstractScreen
   end
   
   def accept
-    if @word_control.valid || @imaginary_word
+    if @word_control.valid || (@imaginary_word && @imaginary_count > 0)
       if @imaginary_word
         @imaginary_count -= 1
       end
