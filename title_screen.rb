@@ -10,21 +10,25 @@ class TitleScreen < AbstractScreen
       "You can insert, remove, or replace a letter",
       "If you replace a letter, you may not replace the same letter in the next move",
       "You are allowed a limited number of imaginary words to help you get to new words.",
-      "One last rule, once you make a word, you cannot use it again.",
-      "",
-      "Click to begin!",
-      "",
-      "More to come, no seriously, ask me in a week or so!"
+      "One last rule, once you make a word, you cannot use it again."
     ]
     
     rules.each_with_index{|r,i| add Label.new(32, title.bottom + (i+2) * (14), r, :height=>16) }
+    
+    Game.all_options.each_with_index{|option, i|
+      key = option.first
+      add new_timed_game = Button.new(320, 256+i*52, key){
+        Game.options_set = key
+        window.next_state = GameScreen.new
+      }
+    }
+    
   end
     
   def button_down(id)
     case id
     when Gosu::KbEscape:  window.close
     when Gosu::KbQ:       window.close
-    else                  window.next_state = GameScreen.new()
     end
   end
 end

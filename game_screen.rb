@@ -12,17 +12,21 @@ class GameScreen < AbstractScreen
     add @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
     add score = Label.new(10, 10, :height=>16){"words: #{@words.length}"}
     add Label.new(10, score.bottom + 2, :height=>16){ "imaginary words remaining: #{@imaginary_count}" }
-    add remaining_label = Label.new(self.width - 32, 10, @duration)
     
-    add @timer = Timer.new(1000){|ticks|
-      remaining = @duration - ticks
-      remaining_label.text = remaining
-      case remaining
-        when 10: remaining_label.color = Colors::WARNING
-        when 5:  message "5 seconds remaining", :color=>Colors::WARNING
-        when 3,2,1:  message "#{remaining}",    :color=>Colors::WARNING
-      end
-    } 
+    if @duration
+      add remaining_label = Label.new(self.width - 64, 10, @duration)
+      add timer = Timer.new(1000){|ticks|
+        remaining = @duration - ticks
+        remaining_label.text = remaining
+        case remaining
+          when 10:        remaining_label.color = Colors::WARNING
+          when 5:         message "5 seconds remaining", :color=>Colors::WARNING
+          when 3,2,1:     message "#{remaining}",    :color=>Colors::WARNING
+          when 0:         game_over
+        end
+      }
+      timer.start
+    end
     
     add @word_control = WordControl.new(320, 256, @initial_word)
     
@@ -35,7 +39,6 @@ class GameScreen < AbstractScreen
     message "Welcome"
     
     @started = Time.now
-    @timer.start
   end
   
   def update
@@ -66,8 +69,6 @@ class GameScreen < AbstractScreen
       end
       
     end
-    
-    game_over if @timer.ticks >= Game.options['duration']
   end
   
   def accept
@@ -86,7 +87,7 @@ class GameScreen < AbstractScreen
   def game_over
     round = Round.create(
       :started=>@started,
-      :duration=>Game.options['duration'],
+      :duration=>@duration,
       :score=>@words.length, 
       :initial_word=>@initial_word, 
       :words=>@words.join(',')

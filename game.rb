@@ -3,6 +3,7 @@ class Game
   
   class << self
     attr_accessor :window
+    attr_accessor :options_set
     
     def state
       window.state
@@ -27,12 +28,15 @@ class Game
     end
     
     def options_set
-      "default"
+      @options_set ||= 'short game'
+    end
+    
+    def all_options
+      @options ||= YAML.load_file(File.join(ROOT, 'options.yml'))
     end
     
     def options
-      @options ||= YAML.load_file(File.join(ROOT, 'options.yml'))
-      @options[options_set]
+      all_options[options_set]
     end
     
     def db
