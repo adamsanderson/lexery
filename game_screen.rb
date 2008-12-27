@@ -12,20 +12,19 @@ class GameScreen < AbstractScreen
     @words = []
     @messages = []
     
-    @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
-    @score =  Label.new(10, 10, :height=>16){"words: #{@words.length}"}
-    @imaginary_label =  Label.new(10, @score.bottom + 2, :height=>16){ "imaginary words remaining: #{@imaginary_count}" }
+    add @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
+    add score = Label.new(10, 10, :height=>16){"words: #{@words.length}"}
+    add Label.new(10, score.bottom + 2, :height=>16){ "imaginary words remaining: #{@imaginary_count}" }
     
-    @timer = Timer.new(self.width - 32, 10, Game.options['duration'])
+    add @timer = Timer.new(self.width - 32, 10, Game.options['duration'])
     
-    @word_control = WordControl.new(320, 256, @initial_word)
-    Game.window.text_input = @word_control
-
-    @reset_button = Button.new(@word_control.left, @word_control.bottom + 10, 'reset') do
+    add @word_control = WordControl.new(320, 256, @initial_word)
+    
+    add @reset_button = Button.new(@word_control.left, @word_control.bottom + 10, 'reset'){
       @word_control.reset
-    end
+    }
     
-    @ok_button = Button.new(@reset_button.right + 12, @word_control.bottom + 10, 'ok') do
+    add @ok_button = Button.new(@reset_button.right + 12, @word_control.bottom + 10, 'ok'){
       if @word_control.valid || @imaginary_word
         if @imaginary_word
           @imaginary_count -= 1
@@ -36,22 +35,16 @@ class GameScreen < AbstractScreen
         message word, :color=>(@imaginary_word ? Gosu::Color.new(128, 255,0,0) : nil )
         @word_control.word = word
       end
-    end
+    }
     
     message "Welcome"
+    
     @started = Time.now
     @timer.start
   end
   
   def draw
     super
-    @word_control.draw
-    @reset_button.draw
-    @ok_button.draw
-    @status.draw
-    @score.draw
-    @imaginary_label.draw
-    @timer.draw
     
     @messages.each do |m|
       m.draw
@@ -59,6 +52,8 @@ class GameScreen < AbstractScreen
   end
   
   def update
+    super 
+    
     # todo: make this into an event/listener
     # todo: make this into the rules object
     unless @last_word == @word_control.text 
@@ -86,14 +81,6 @@ class GameScreen < AbstractScreen
       
     end
     
-    @word_control.update
-    @reset_button.update
-    @ok_button.update
-    @status.update
-    @score.update
-    @imaginary_label.update
-    @timer.update
-    
     @messages.each do |m|
       @messages.delete m if m.update == false
     end
@@ -114,19 +101,16 @@ class GameScreen < AbstractScreen
   end
   
   def button_down(id)
+    super
+    
     case id
-    when Gosu::KbReturn, Gosu::KbEnter then 
+    when Gosu::KbReturn, Gosu::KbEnter then
       @ok_button.action.call(0,0,0)
     when Gosu::KbTab then
       game_over
     when Gosu::KbEscape then  
       window.next_state = TitleScreen.new
     end
-  end
-  
-  def button_up(id)
-    @reset_button.button_up(id)
-    @ok_button.button_up(id)
   end
   
   def message(text, options={})

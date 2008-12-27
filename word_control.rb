@@ -22,6 +22,8 @@ class WordControl < Gosu::TextInput
 
     @x = x
     @y = y
+    
+    Game.window.text_input = self
   end
       
   def word= new_word
