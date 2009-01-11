@@ -3,4 +3,6 @@ require 'gosu'
 require 'sequel'
 require 'support'
 
-GameWindow.new.show
+if __FILE__ == $0
+  GameWindow.new.show
+end
