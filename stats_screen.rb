@@ -14,7 +14,7 @@ class StatsScreen < AbstractScreen
       
       if count > 0
         average = games.filter('score > 0').avg :score
-        best_round = games.order('score desc, started desc').first
+        best_round = games.order(:score.desc, :started.desc).first
         
         add label = Label.new(340, y+36, "Rounds Played", :height=>18)
         add label = Label.new(480, y+36, count,           :height=>18)
