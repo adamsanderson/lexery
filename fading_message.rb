@@ -1,41 +1,23 @@
-class FadingMessage
-  include Positioned
-  attr_reader :x, :y, :width, :height, :text
-  
-  def initialize(x,y, text, options={}, &action)
-    super()
+class FadingMessage < Label
+  def initialize(x,y, text, options={})
+    super(x,y, text, options)
     
-    @x = x
-    @start_y = @y = y
+    @start_y    = self.y
+    @target_y   = 0 - self.height
+    @base_color = self.color
     
-    @text = text
-    
-    @height = options[:height]  || 32
-    @font =   options[:font]    || Game.load_font('Helvetica', @height - 4)
-    @width =  options[:width]   || @font.text_width(@text) + 4
-    @color =  options[:color]   || Gosu::Color.new(0xCC6666FF)
-    
-    @duration = options[:duration] || 3000 # 3 seconds
-    @target_y = 0 - @height
-    @started = Gosu::milliseconds
-    @p = 1
+    Game.state.add Effect.new(3000, 
+      :mode=>:out, 
+      :finish=>lambda{Game.state.remove self}
+      ){|p|
+        
+        self.color = Gosu::Color.new(
+          (255*p).to_i, 
+          @base_color.red,
+          @base_color.green,
+          @base_color.blue
+        )
+        self.y = (@target_y..@start_y)[p]
+    }
   end
-  
-  def update
-    @p = 1 - (Gosu::milliseconds - @started)/(@duration.to_f)
-    @y = @target_y + (@start_y - @target_y) * @p
-
-    Game.state.remove self if @p <= 0
-  end
-  
-  def draw
-    color = Gosu::Color.new(
-      (@color.alpha*@p).to_i, 
-      @color.red,
-      @color.green,
-      @color.blue
-    )
-    @font.draw(text, x , y , Layers::UI, 1, 1, color, :default)
-  end
-  
 end

@@ -24,3 +24,10 @@ class String
     self.split(//)
   end
 end
+
+class Range
+  def [] index
+    raise ArgumentError.new("Index #{index} must be between 0 and 1") if (index > 1 || index < 0)
+    (self.end - self.begin) * index + self.begin
+  end
+end

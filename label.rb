@@ -20,7 +20,7 @@ class Label
     self.text = text
     @block = block if block_given?
     
-    @color = options[:color]    || 0x66666666
+    @color = options[:color]    || Gosu::Color.new(0x66666666)
   end
   
   def text= new_text

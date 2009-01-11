@@ -93,7 +93,7 @@ class GameScreen < AbstractScreen
       :initial_word=>@initial_word, 
       :words=>@words.join(',')
     )
-    
+        
     window.next_state = GameOverScreen.new(round)
   end
   
@@ -111,6 +111,6 @@ class GameScreen < AbstractScreen
   end
   
   def message(text, options={})
-    add FadingMessage.new(320, 256-32, text, options)
+    add m = FadingMessage.new(320, 224, text, options)
   end
 end
