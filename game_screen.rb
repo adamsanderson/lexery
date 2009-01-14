@@ -19,6 +19,7 @@ class GameScreen < AbstractScreen
         remaining = @duration - ticks
         remaining_label.text = remaining
         case remaining
+          when @duration: message "Welcome"
           when 10:        remaining_label.color = Colors::WARNING
           when 5:         message "5 seconds remaining", :color=>Colors::WARNING
           when 3,2,1:     message "#{remaining}",    :color=>Colors::WARNING
@@ -36,9 +37,7 @@ class GameScreen < AbstractScreen
     
     add @ok_button = Button.new(@reset_button.right + 12, @word_control.bottom + 10, 'ok'){ accept }
     add @done_button = Button.new(width - 64, @status.top, 'done'){ game_over }
-    
-    message "Welcome"
-    
+
     @started = Time.now
   end
   

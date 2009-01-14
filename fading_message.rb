@@ -10,7 +10,6 @@ class FadingMessage < Label
       :mode=>:out, 
       :finish=>lambda{Game.state.remove self}
       ){|p|
-        
         self.color = Gosu::Color.new(
           (255*p).to_i, 
           @base_color.red,
