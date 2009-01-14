@@ -103,7 +103,7 @@ class GameScreen < AbstractScreen
     when Gosu::KbReturn, Gosu::KbEnter then
       accept
     when Gosu::KbTab then
-      game_over
+      @word_control.reset
     when Gosu::KbEscape then  
       window.next_state = TitleScreen.new
     end
