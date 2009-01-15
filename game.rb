@@ -4,6 +4,7 @@ class Game
   class << self
     attr_accessor :window
     attr_accessor :options_set
+    attr_accessor :default_font
     
     def state
       window.state
@@ -21,9 +22,7 @@ class Game
     
     def load_font(name, size)
       @fonts ||= {}
-      #@fonts[name] ||= Gosu::Font.new window, File.join(ROOT, name), size
-      #@fonts[name] ||= Gosu::Font.new window, Gosu::default_font_name, size
-
+      name = Game.default_font if name == :default
       @fonts[[name,size]] ||= Gosu::Font.new window, name, size
     end
     

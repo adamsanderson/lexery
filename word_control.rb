@@ -16,7 +16,7 @@ class WordControl < Gosu::TextInput
     super()
     
     @height = 64
-    @font = Game.load_font 'Helvetica', @height
+    @font = Game.load_font :default, @height
     self.word = word
     self.text = word
 

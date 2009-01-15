@@ -4,5 +4,6 @@ require 'sequel'
 require 'support'
 
 if __FILE__ == $0
+  Game.default_font = 'fonts/MuseoSans_500.otf'
   GameWindow.new.show
 end

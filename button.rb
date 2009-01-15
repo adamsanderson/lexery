@@ -18,7 +18,7 @@ class Button < GameObject
     subscribe(:click, self, &action) if block_given?
     
     @height = options[:height]  || 32
-    @font =   options[:font]    || Game.load_font('Helvetica', @height - 4)
+    @font =   options[:font]    || Game.load_font(:default, @height - 4)
     @width =  options[:width]   || @font.text_width(@text) + 4
     
     @color = options[:color]    || 0x666666CC

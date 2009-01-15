@@ -14,7 +14,7 @@ class Label
     @options = options
     
     @height = options[:height]  || 32
-    @font =   options[:font]    || Game.load_font('Helvetica', @height - 4)
+    @font =   options[:font]    || Game.load_font(:default, @height - 4)
     @width =  options[:width]   || @font.text_width(@text) + 4
     
     self.text = text
