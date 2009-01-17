@@ -1,32 +1,51 @@
 class Transition
   def initialize(duration, start_value, end_value, options={}, &action)
     @duration = duration.to_f
-    @start_value = start_value.to_f
-    @change = @end_value.to_f - @start_value.to_f
-    
+    @start_value = start_value
+    @change = compute_change(start_value, end_value)
     @options = options
     
-    if options[:mode].is_a? Symbol
-      @function = TWEEN_FUNCTIONS[options[:mode]]
-    else
-      @function = options[:mode] || TWEEN_FUNCTIONS[:linear_tween]
-    end
-    
-    @options[:start].call if @options[:start]
     @action = action
     
+    start
     @started = Gosu::milliseconds
+  end
+  
+  def start
+    @options[:start].call if @options[:start]
+  end
+  
+  def finish
+    @options[:finish].call if @options[:finish]
+    Game.state.remove self
+  end
+  
+  def tweening_function
+    return @function if @function
+    
+    if @options[:mode].is_a? Symbol
+      @function = TWEEN_FUNCTIONS[@options[:mode]]
+    else
+      @function = @options[:mode] || TWEEN_FUNCTIONS[:linear_tween]
+    end
+  end
+  
+  def compute_change(start_value, end_value)
+    start_value.to_f - end_value.to_f
   end
   
   def update
     t =  (Gosu::milliseconds - @started)
     
     if t >= @duration
-      @options[:finish].call if @options[:finish]
-      Game.state.remove self
+      finish
     else
-      @action.call(@function[t, @start_value, @change, @duration])
+      apply(t)
     end
+  end
+  
+  def apply(t)
+    @action.call(tweening_function[t, @start_value, @change, @duration])
   end
   
   # Tweening functions; as per Robert Penner
@@ -36,7 +55,7 @@ class Transition
   # c: change
   # d: duration
   TWEEN_FUNCTIONS={
-    :linear_tween =>  lambda{|t, b, c, d| c*t/d + b},
+    :linear_tween =>  lambda{|t, b, c, d| c*(t/d) + b},
     :ease_in_quad =>  lambda{|t, b, c, d| c*(t/=d)*t + b},
     :ease_out_quad => lambda{|t, b, c, d| -c * (t/=d)*(t-2) + b},
     :ease_in_quart => lambda{|t, b, c, d| c * ((t/d) ** 4) + b},
