@@ -4,17 +4,24 @@ class TitleScreen < AbstractScreen
     add title = Label.new(10, 10, 'OckiDeux', :color=>Colors::HEADER, :height=>48)
     title.x = Game.window.width/2 - title.width/2
     
-    rules = [
-      "The goal of this game is to make chains of words",
-      "You may make one change to each word to get a new word",
-      "You can insert, remove, or replace a letter",
-      "If you replace a letter, you may not replace the same letter in the next move",
-      "You are allowed a limited number of imaginary words to help you get to new words.",
-      "One last rule, once you make a word, you cannot use it again."
-    ]
+    add timer = Timer.new(3000){|ticks|
+      case ticks % 12
+        when 0:         message "Make Words Into New Words "
+        when 1:         message "Grass"
+        when 2:         message "Replace the r with l"
+        when 3:         message "Glass"
+        when 4:         message "Remove the G"
+        when 5:         message "Lass"
+        when 6:         message "Replace the s with t"  
+        when 7:         message "Last"
+        when 8:         message "Swap the L and s"  
+        when 9:         message "Salt"
+        when 10:        message "Add an S"  
+        when 11:        message "Salts"
+      end
+    }
+    timer.start
     
-    rules.each_with_index{|r,i| add Label.new(32, title.bottom + (i+2) * (14), r, :height=>16) }
-
     start_buttons = []
     Game.all_options.each_with_index{|option, i|
       key = option.first
@@ -35,5 +42,9 @@ class TitleScreen < AbstractScreen
     when Gosu::KbEscape:  window.close
     when Gosu::KbQ:       window.close
     end
+  end
+  
+  def message(text, options={})
+    add m = FadingMessage.new(320, 224, text, {:mode=>:ease_in_quad}.merge(options))
   end
 end

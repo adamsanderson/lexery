@@ -26,7 +26,7 @@ class Transition
     if @options[:mode].is_a? Symbol
       @function = TWEEN_FUNCTIONS[@options[:mode]]
     else
-      @function = @options[:mode] || TWEEN_FUNCTIONS[:linear_tween]
+      @function = @options[:mode]
     end
   end
   
@@ -57,10 +57,11 @@ class Transition
   TWEEN_FUNCTIONS={
     :linear_tween =>  lambda{|t, b, c, d| c*(t/d) + b},
     :ease_in_quad =>  lambda{|t, b, c, d| c*(t/=d)*t + b},
-    :ease_out_quad => lambda{|t, b, c, d| -c * (t/=d)*(t-2) + b},
+    :ease_out_quad => lambda{|t, b, c, d| c * (t/=d)*(t-2)*-1 + b},
     :ease_in_quart => lambda{|t, b, c, d| c * ((t/d) ** 4) + b},
-    :ease_out_quart =>lambda{|t, b, c, d| -c * ((t/d-1) ** 4) -1 + b},
+    :ease_out_quart =>lambda{|t, b, c, d| c * ((t/d-1) ** 4)*-1 -1 + b},
     :ease_in_sine =>  lambda{|t, b, c, d| c * (1 - Math.cos(t/d * (Math::PI/2))) + b},
     :ease_out_sine => lambda{|t, b, c, d| c * Math.sin(t/d * (Math::PI/2)) + b}
   }
+  TWEEN_FUNCTIONS.default = :linear_tween
 end
