@@ -7,8 +7,10 @@ class Transition
     
     @action = action
     
+    delay = options[:delay] || 0
+    
     start
-    @started = Gosu::milliseconds
+    @starts = Gosu::milliseconds + delay
   end
   
   def start
@@ -37,11 +39,11 @@ class Transition
   end
   
   def update
-    t =  (Gosu::milliseconds - @started)
+    t =  (Gosu::milliseconds - @starts)
     
     if t >= @duration
       finish
-    else
+    elsif t >= 0
       apply(t)
     end
   end
