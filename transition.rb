@@ -26,8 +26,10 @@ class Transition
     if @options[:mode].is_a? Symbol
       @function = TWEEN_FUNCTIONS[@options[:mode]]
     else
-      @function = @options[:mode]
+      @function = @options[:mode] || TWEEN_FUNCTIONS.default
     end
+
+    @function
   end
   
   def compute_change(start_value, end_value)
@@ -63,5 +65,5 @@ class Transition
     :ease_in_sine =>  lambda{|t, b, c, d| c * (1 - Math.cos(t/d * (Math::PI/2))) + b},
     :ease_out_sine => lambda{|t, b, c, d| c * Math.sin(t/d * (Math::PI/2)) + b}
   }
-  TWEEN_FUNCTIONS.default = :linear_tween
+  TWEEN_FUNCTIONS.default = TWEEN_FUNCTIONS[:linear_tween]
 end

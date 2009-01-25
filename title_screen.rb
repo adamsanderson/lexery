@@ -7,6 +7,7 @@ class TitleScreen < AbstractScreen
     add @word = Label.new(320, 220, 'Word', :color=>Colors::HEADER, :height=>36)
     
     add timer = Timer.new(3000){|ticks|
+      Move[@word, {:by=>[10,0]} ]
       case ticks % 12
         when 0:         message "Make Words Into New Words"
                         word "Grass"
