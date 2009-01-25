@@ -4,20 +4,22 @@ class TitleScreen < AbstractScreen
     add title = Label.new(10, 10, 'OckiDeux', :color=>Colors::HEADER, :height=>48)
     title.x = Game.window.width/2 - title.width/2
     
+    add @word = Label.new(320, 220, 'Word', :color=>Colors::HEADER, :height=>36)
+    
     add timer = Timer.new(3000){|ticks|
       case ticks % 12
-        when 0:         message "Make Words Into New Words "
-        when 1:         message "Grass"
+        when 0:         message "Make Words Into New Words"
+                        word "Grass"
         when 2:         message "Replace the r with l"
-        when 3:         message "Glass"
+                        word "Glass"
         when 4:         message "Remove the G"
-        when 5:         message "Lass"
+                        word "Lass"
         when 6:         message "Replace the s with t"  
-        when 7:         message "Last"
+                        word "Last"
         when 8:         message "Swap the L and s"  
-        when 9:         message "Salt"
+                        word "Salt"
         when 10:        message "Add an S"  
-        when 11:        message "Salts"
+                        word "Salts"
       end
     }
     timer.start
@@ -45,6 +47,10 @@ class TitleScreen < AbstractScreen
   end
   
   def message(text, options={})
-    add m = FadingMessage.new(320, 224, text, {:mode=>:ease_in_quad}.merge(options))
+    add m = FadingMessage.new(@word.left, @word.top - @word.height * 1.2, text, {:mode=>:ease_in_quad}.merge(options))
+  end
+  
+  def word(text)
+    @word.text = text
   end
 end
