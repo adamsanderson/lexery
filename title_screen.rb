@@ -4,7 +4,7 @@ class TitleScreen < AbstractScreen
     add title = Label.new(10, 10, 'OckiDeux', :color=>Colors::HEADER, :height=>48)
     title.x = Game.window.width/2 - title.width/2
     
-    add @word = Label.new(320, 220, '', :color=>Colors::HEADER, :height=>36)
+    add @word = Label.new(320, 200, '', :color=>Colors::HEADER, :height=>36)
     
     add timer = Timer.new(4000){|ticks|
       case ticks % 8
@@ -52,6 +52,7 @@ class TitleScreen < AbstractScreen
   def message(text, options={})
     label = Label.new(@word.left, @word.top - @word.height * 1.2, text)
     Move.insert(label, :to=>[label.x, -label.height], :delay=>3000, :in=>1000, :mode=>:ease_in_quad, :after=>lambda{remove label})
+    Fade[label, {:to=>:out, :delay=>3000, :mode=>:ease_in_quad}]
   end
   
   def word(text)
