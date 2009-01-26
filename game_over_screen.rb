@@ -18,6 +18,11 @@ class GameOverScreen < AbstractScreen
     add replay_game = Button.new(new_game.left, new_game.bottom + 4, "Try Again"){
       window.next_state = GameScreen.new(round.initial_word)
     }
+    
+    add Button.new(10, height - 32, "Back"){
+      window.next_state = TitleScreen.new
+    }
+    
     timer.start
   end
   

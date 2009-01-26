@@ -4,6 +4,6 @@
     duration: 60
 - long game:
     imaginary_words: 3
-    duration: 3000
+    duration: 300
 - unlimited game:
     imaginary_words: 3

@@ -26,7 +26,7 @@ class StatsScreen < AbstractScreen
       labels << label
     }
     
-    add Button.new(340, labels.last.bottom + 32, "Back"){
+    add Button.new(10, height - 32, "Back"){
       window.next_state = TitleScreen.new
     }
   end

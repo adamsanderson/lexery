@@ -40,6 +40,10 @@ class TitleScreen < AbstractScreen
     add Button.new(start_buttons.last.left, start_buttons.last.bottom + 32, "Statistics"){
       window.next_state = StatsScreen.new
     }
+    
+    add Button.new(10, height - 32, "Quit"){
+      window.close
+    }
   end
     
   def button_down(id)
