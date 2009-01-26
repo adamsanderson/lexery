@@ -4,23 +4,25 @@ class TitleScreen < AbstractScreen
     add title = Label.new(10, 10, 'OckiDeux', :color=>Colors::HEADER, :height=>48)
     title.x = Game.window.width/2 - title.width/2
     
-    add @word = Label.new(320, 220, 'Word', :color=>Colors::HEADER, :height=>36)
+    add @word = Label.new(320, 220, '', :color=>Colors::HEADER, :height=>36)
     
-    add timer = Timer.new(3000){|ticks|
-      Move[@word, {:by=>[10,0]} ]
-      case ticks % 12
+    add timer = Timer.new(4000){|ticks|
+      case ticks % 8
         when 0:         message "Make Words Into New Words"
+        when 1:         message "Start with Grass"
                         word "Grass"
         when 2:         message "Replace the r with l"
                         word "Glass"
-        when 4:         message "Remove the G"
+        when 3:         message "Remove the G"
                         word "Lass"
-        when 6:         message "Replace the s with t"  
+        when 4:         message "Replace the s with t"  
                         word "Last"
-        when 8:         message "Swap the L and s"  
+        when 5:         message "Swap the L and s"  
                         word "Salt"
-        when 10:        message "Add an S"  
+        when 6:         message "Add an S"  
                         word "Salts"
+        when 7:         message "That's all there is to it"
+                        word ""
       end
     }
     timer.start
@@ -48,10 +50,14 @@ class TitleScreen < AbstractScreen
   end
   
   def message(text, options={})
-    add m = FadingMessage.new(@word.left, @word.top - @word.height * 1.2, text, {:mode=>:ease_in_quad}.merge(options))
+    label = Label.new(@word.left, @word.top - @word.height * 1.2, text)
+    Move.insert(label, :to=>[label.x, -label.height], :delay=>3000, :in=>1000, :mode=>:ease_in_quad, :after=>lambda{remove label})
   end
   
   def word(text)
-    @word.text = text
+    Fade[@word, {
+      :to=>:out, :in=>500, :delay=>1000,
+      :after=>lambda{@word.text = text; Fade[@word, {:to=>:in}]}
+    }]
   end
 end

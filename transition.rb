@@ -9,16 +9,16 @@ class Transition
     
     delay = options[:delay] || 0
     
-    start
+    before
     @starts = Gosu::milliseconds + delay
   end
   
-  def start
-    @options[:start].call if @options[:start]
+  def before
+    @options[:before].call if @options[:before]
   end
   
-  def finish
-    @options[:finish].call if @options[:finish]
+  def after
+    @options[:after].call if @options[:after]
     Game.state.remove self
   end
   
@@ -42,7 +42,7 @@ class Transition
     t =  (Gosu::milliseconds - @starts)
     
     if t >= @duration
-      finish
+      after
     elsif t >= 0
       apply(t)
     end

@@ -31,3 +31,13 @@ class Range
     (self.end - self.begin) * index + self.begin
   end
 end
+
+class Proc
+  def compose(g)
+    return self if g.nil?
+    lambda { |*args| self[g[*args]] }
+  end
+  def *(g)
+    compose(self, g)
+  end
+end

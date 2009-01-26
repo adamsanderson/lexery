@@ -2,6 +2,7 @@ require 'rubygems'
 require 'gosu'
 require 'sequel'
 require 'support'
+require 'gosu_support'
 require 'matrix'
 
 if __FILE__ == $0

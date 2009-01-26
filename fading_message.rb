@@ -8,7 +8,7 @@ class FadingMessage < Label
     
     Game.state.add MultiTransition.new(3000, [@start_y, 255], [@target_y, 0],
       :mode=>options[:mode], 
-      :finish=>lambda{Game.state.remove self}
+      :after=>lambda{Game.state.remove self}
       ){|y, alpha|
           self.color = Gosu::Color.new(
             alpha.to_i, 
