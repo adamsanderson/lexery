@@ -3,3 +3,9 @@ You may create a new wordlist using:
   ruby build_wordlist.rb <input_file>
 
 OckiDeux will look for a words.db here.
+
+The default words.txt file included is the TWL06 wordlist from:
+  http://www.isc.ro/en/commands/lists.html
+  
+See Wikipedia for more information of the TWL06 wordlist:
+  http://en.wikipedia.org/wiki/Tournament_Word_List
