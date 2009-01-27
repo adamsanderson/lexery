@@ -16,7 +16,7 @@ class GameWindow < Gosu::Window
   
   def update
     @fps.register_tick
-    self.caption = "OckiDeux: #{@fps.fps} FPS"
+    self.caption = "Lexery: #{@fps.fps} FPS"
         
     @state.update
     if @next_state then

@@ -1,7 +1,7 @@
 class TitleScreen < AbstractScreen
   def initialize
     super
-    add title = Label.new(10, 10, 'OckiDeux', :color=>Colors::HEADER, :height=>48)
+    add title = Label.new(10, 10, 'Lexery', :color=>Colors::HEADER, :height=>48)
     title.x = Game.window.width/2 - title.width/2
     
     add @word = Label.new(320, 200, '', :color=>Colors::HEADER, :height=>36)
