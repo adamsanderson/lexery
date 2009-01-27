@@ -1,9 +1,9 @@
 --- !omap
 - short game:
-    imaginary_words: 3
+    imaginary_words: 1
     duration: 60
 - long game:
-    imaginary_words: 3
+    imaginary_words: 1
     duration: 300
 - unlimited game:
-    imaginary_words: 3
+    imaginary_words: 1
