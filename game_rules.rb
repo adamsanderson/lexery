@@ -1,5 +1,4 @@
 class GameRules
-  # TODO: allow swaps
   def valid_transition?(old_word, new_word)
     d = distance(old_word, new_word)
     case d
@@ -11,6 +10,9 @@ class GameRules
     end
   end
   
+  private
+  # From:
+  #   http://rubyforge.org/projects/text
   def distance(str1, str2)
     if $KCODE =~ /^U/i
       unpack_rule = 'U*'
