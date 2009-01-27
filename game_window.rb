@@ -5,6 +5,7 @@ class GameWindow < Gosu::Window
   def initialize()
     super(800, 600, false)
     Game.window = self
+    
     @state = TitleScreen.new
     @fps = FpsCounter.new
   end

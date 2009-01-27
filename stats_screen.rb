@@ -9,7 +9,7 @@ class StatsScreen < AbstractScreen
       key = option.first
       y = 128+i*96
       add label = Label.new(320, y, key.capitalize)
-      games = Game.db[:rounds].filter(:options_set=>key)
+      games = Round.filter(:options_set=>key)
       count = games.count
       
       if count > 0
@@ -22,6 +22,8 @@ class StatsScreen < AbstractScreen
         add label = Label.new(480, y+50, average,         :height=>18)
         add label = Label.new(340, y+66, "Best Round",    :height=>18)
         add label = Label.new(480, y+66, "'#{best_round[:initial_word]}' #{best_round[:score]}", :height=>18)
+      else
+        add label = Label.new(340, y+36, "No games played yet", :height=>18)
       end
       labels << label
     }
