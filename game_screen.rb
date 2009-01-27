@@ -4,8 +4,9 @@ class GameScreen < AbstractScreen
     
     @rules = GameRules.new
     @initial_word = word || Word.pick
-    @imaginary_count = Game.options['imaginary_words']    
+    @imaginary_count = Game.options['imaginary_words']
     @words = []
+    @imaginary_words = []
     @duration = Game.options['duration']
     
     add @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
@@ -72,11 +73,13 @@ class GameScreen < AbstractScreen
   
   def accept
     if @word_control.valid || (@imaginary_word && @imaginary_count > 0)
+      word = @word_control.text
+
       if @imaginary_word
+        @imaginary_words << word
         @imaginary_count -= 1
       end
       
-      word = @word_control.text
       @words << word
       message word, :color=>(@imaginary_word ? Gosu::Color.new(128, 255,0,0) : nil )
       @word_control.word = word
@@ -84,12 +87,14 @@ class GameScreen < AbstractScreen
   end
   
   def game_over
+    score = [0, @words.length - @imaginary_words.length].max
     round = Round.create(
-      :started=>@started,
-      :options_set=>Game.options_set,
-      :score=>@words.length, 
-      :initial_word=>@initial_word, 
-      :words=>@words.join(',')
+      :started         => @started,
+      :options_set     => Game.options_set,
+      :score           => @words.length, 
+      :initial_word    => @initial_word, 
+      :words           => @words.join(','),
+      :imaginary_words => @imaginary_words.join('')
     )
         
     window.next_state = GameOverScreen.new(round)

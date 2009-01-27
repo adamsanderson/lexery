@@ -6,5 +6,6 @@ class Round < Sequel::Model
     string      :options_set
     string      :initial_word
     text        :words # comma separated, lets be lazy
+    text        :imaginary_words # comma separated, lets be lazy
   end
 end

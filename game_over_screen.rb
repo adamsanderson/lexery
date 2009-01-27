@@ -2,13 +2,16 @@ class GameOverScreen < AbstractScreen
   def initialize(round)
     super()
     words = round.words.split(',')
+    imaginary_words = round.imaginary_words.split(',')
     
     add title = Label.new(10, 10, 'Game Over', :color=>Colors::HEADER, :height=>48)
     title.x = Game.window.width/2 - title.width/2
     
     add score = Label.new(320, 256, "'#{round.initial_word}' #{round.score} words")
     add timer = Timer.new(1000){|ticks|
-      add FadingMessage.new(320, score.top-32, words[(ticks+1) % words.length], :color=>Colors::FADED)
+      word = words[(ticks+1) % words.length]
+      color = imaginary_words.include?(word) ? Colors::FADED_WARNING : Colors::FADED
+      add FadingMessage.new(320, score.top-32, word, :color=>color)
     }
     
     add new_game = Button.new(score.left, score.bottom + 4, "New Game"){
