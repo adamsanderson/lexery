@@ -22,7 +22,7 @@ class Game
     
     def load_font(name, size)
       @fonts ||= {}
-      name = Game.default_font if name == :default
+      name = (Game.default_font || Gosu.default_font_name) if name == :default
       @fonts[[name,size]] ||= Gosu::Font.new window, name, size
     end
     
