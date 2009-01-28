@@ -1,3 +1,9 @@
 #!/usr/bin/env ruby
+require 'lexery'
+require 'irb'
+
+Game.db # tickle the database to get the models loaded
 puts "DB available in Game.db"
-exec 'irb -r lexery --simple-prompt'
+puts "Models: Word, Round"
+
+IRB.start
