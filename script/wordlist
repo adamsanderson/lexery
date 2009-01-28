@@ -2,7 +2,7 @@
 
 require 'rubygems'
 require 'sequel'
-require 'support'
+require File.join(File.dirname(__FILE__),'..','lib','lexery')
 
 list = ARGV.shift
 if !list

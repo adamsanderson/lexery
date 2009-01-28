@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require 'lexery'
+require File.join(File.dirname(__FILE__),'..','lib','lexery')
 require 'irb'
 
 Game.db # tickle the database to get the models loaded

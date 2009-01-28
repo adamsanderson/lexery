@@ -1,6 +1,4 @@
 class Game
-  ROOT = File.join(File.dirname(__FILE__))
-  
   class << self
     attr_accessor :window
     attr_accessor :options_set
@@ -12,12 +10,12 @@ class Game
     
     def load_image(name, options=[])
       @images ||= {}
-      @images[name] ||= Gosu::Image.new window, File.join(ROOT,'images', name), *options
+      @images[name] ||= Gosu::Image.new window, File.join(GAME_ROOT,'images', name), *options
     end
     
     def load_sound(name)
       @sounds ||= {}
-      @sounds[name] ||= Gosu::Sample.new window, File.join(ROOT, name)
+      @sounds[name] ||= Gosu::Sample.new window, File.join(GAME_ROOT, name)
     end
     
     def load_font(name, size)
@@ -31,7 +29,7 @@ class Game
     end
     
     def all_options
-      @options ||= YAML.load_file(File.join(ROOT, 'options.yml'))
+      @options ||= YAML.load_file(File.join(GAME_ROOT, 'options.yml'))
     end
     
     def options
@@ -40,7 +38,7 @@ class Game
     
     def db
       unless @db
-        db_path = File.join(ROOT, 'game.db')
+        db_path = File.join(GAME_ROOT, 'game.db')
         new_db = !File.exists?(db_path)
         @db = Sequel.sqlite(db_path)
         
@@ -48,7 +46,7 @@ class Game
           Round.create_table
         end
         
-        wordlist = File.join(ROOT, 'wordlists', 'words.db')
+        wordlist = File.join(GAME_ROOT, 'wordlists', 'words.db')
         @db << "attach '#{wordlist}' as wordlist"
       end
       @db
