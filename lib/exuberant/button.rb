@@ -1,4 +1,4 @@
-class Button < GameObject
+class Button
   HOVER_COLOR_1 = Gosu::Color.new 0x116666FF
   HOVER_COLOR_2 = Gosu::Color.new 0x0
   
