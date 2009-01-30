@@ -1,7 +1,6 @@
 # Ensure that classes are loaded on demand.
 class Module
   def const_missing(sym)
-    # puts "Searching for '#{sym}', #{sym.to_s.underscore}"
     require sym.to_s.underscore
     c = const_get(sym)
   end
