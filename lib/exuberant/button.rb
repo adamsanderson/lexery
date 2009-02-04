@@ -1,4 +1,4 @@
-class Button
+class Button < Container
   HOVER_COLOR_1 = Gosu::Color.new 0x116666FF
   HOVER_COLOR_2 = Gosu::Color.new 0x0
   
@@ -25,6 +25,8 @@ class Button
   end
     
   def draw
+    super
+    
     @font.draw(text, x , y , Layers::UI, 1, 1, @color, :default)
     if mouse_within?
       Game.window.draw_quad(
@@ -36,6 +38,8 @@ class Button
   end
   
   def button_up(id)
+    super 
+    
     if mouse_within? and mouse_click?(id)
       fire_event :click, Game.window.mouse_x, Game.window.mouse_y, id
     end
