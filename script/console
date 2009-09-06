@@ -2,8 +2,4 @@
 require File.join(File.dirname(__FILE__),'..','lib','lexery')
 require 'irb'
 
-Game.db # tickle the database to get the models loaded
-puts "DB available in Game.db"
-puts "Models: Word, Round"
-
 IRB.start

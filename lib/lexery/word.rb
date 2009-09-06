@@ -1,8 +1,8 @@
 class Word < Sequel::Model
-  set_schema do
-    primary_key :id
-    string :word, :unique=>true
-  end
+  # set_schema do
+  #   primary_key :id
+  #   string :word, :unique=>true
+  # end
   
   class << self
     def pick(length=5)
