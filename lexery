@@ -2,5 +2,4 @@
 require File.join(File.dirname(__FILE__),'lib','lexery')
 
 Game.default_font = 'fonts/MuseoSans_500.otf'
-Game.db # Initialize the db... needed for the Sequel Models to work.
 GameWindow.new.show

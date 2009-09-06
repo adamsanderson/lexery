@@ -3,7 +3,7 @@ class GameScreen < AbstractScreen
     super()
     
     @rules = GameRules.new
-    @initial_word = word || Word.pick
+    @initial_word = word || Game.dictionary.pick
     @imaginary_count = Game.options['imaginary_words']
     @words = []
     @imaginary_words = []
@@ -48,7 +48,7 @@ class GameScreen < AbstractScreen
     # todo: make this into the rules object
     unless @last_word == @word_control.text 
       @valid_transition = @rules.valid_transition? @word_control.word, @word_control.text
-      @valid_word = Word.valid_word? @word_control.text
+      @valid_word = Game.dictionary.valid_word? @word_control.text
       @last_word = @word_control.text
       @changed_word = @word_control.word != @word_control.text
       @new_word = !@words.include?(@word_control.text)
