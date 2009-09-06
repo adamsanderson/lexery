@@ -1,8 +1,9 @@
 class GameOverScreen < AbstractScreen
   def initialize(round)
     super()
-    words = round.words.split(',')
-    imaginary_words = round.imaginary_words.split(',')
+
+    words = round.words
+    imaginary_words = round.imaginary_words
     
     add title = Label.new(10, 10, 'Game Over', :color=>Colors::HEADER, :height=>48)
     title.x = Game.window.width/2 - title.width/2

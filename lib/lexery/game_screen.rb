@@ -88,15 +88,14 @@ class GameScreen < AbstractScreen
   
   def game_over
     score = [0, @words.length - @imaginary_words.length].max
-    round = Round.create(
+    round = Round.new(
       :started         => @started,
-      :options_set     => Game.options_set,
-      :score           => @words.length, 
       :initial_word    => @initial_word, 
-      :words           => @words.join(','),
-      :imaginary_words => @imaginary_words.join('')
+      :words           => @words,
+      :imaginary_words => @imaginary_words
     )
-        
+    
+    Game.score_board.record(Game.options_set, round)
     window.next_state = GameOverScreen.new(round)
   end
   

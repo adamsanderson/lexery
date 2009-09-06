@@ -1,6 +1,6 @@
 class Dictionary
   def initialize(path)
-    @words = Marshal.load(path)
+    @words = Marshal.load(File.read(path))
   end
   
   def valid_word?(word)

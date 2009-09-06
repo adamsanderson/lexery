@@ -15,7 +15,14 @@ class Game < ExuberantGame
     def dictionary
       @dictionary ||= begin
         path = File.join(GAME_ROOT, 'wordlists', 'words.set')
-        Dictionary.new(File.read(path))
+        Dictionary.new(path)
+      end
+    end
+    
+    def score_board
+      @score_board ||= begin
+        path = File.join(GAME_ROOT, 'scores')
+        ScoreBoard.new(path)
       end
     end
     
