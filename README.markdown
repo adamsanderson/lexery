@@ -7,7 +7,7 @@ This was actually a Christmas present for my mother.
 Playing
 -------
 Start the game with:
-    ruby lexery
+    ruby bin/lexery
 
 Each round starts with a random word.
 To make you new word, you can:
@@ -45,7 +45,7 @@ Known Issues and Workarounds
 ----------------------------
 Gosu does not work on MacOSX 10.6 in 64bit mode at the moment, you can run
 Lexery with the following command instead:
-    arch -i386 ruby lexery
+    arch -i386 ruby bin/lexery
 
 Fonts may look less than awesome on Windows and perhaps Linux.
 

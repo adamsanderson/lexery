@@ -55,6 +55,10 @@ class TitleScreen < AbstractScreen
                      width, top,      0x66ffffff,
                      0, bottom,       0x66ffffff,
                      width, bottom,   0x66ffffff
+    window.draw_line 0, top,          0xccccccff,
+                     width, top,      0xccccccff
+    window.draw_line 0, bottom,       0xccccccff,
+                     width, bottom,   0xccccccff
   end
   
   def button_down(id)

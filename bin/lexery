@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.join(File.dirname(__FILE__),'lib','lexery')
+require File.join(File.dirname(__FILE__),'..','lib','lexery')
 
 Game.default_font = 'fonts/MuseoSans_500.otf'
 GameWindow.new.show
