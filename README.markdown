@@ -33,8 +33,7 @@ Find your Dinner:
       
 Hackery Details
 ---------------
-Lexery uses Gosu for its game interface, and SQLite through Sequel to manage 
-the wordlist and maintain a record of past games.  This is my second game 
+Lexery uses Gosu for its game interface.  This is my second game 
 built on Gosu, and I think it might be possible to extract a fair amount of 
 the code into a small game framework.
 
