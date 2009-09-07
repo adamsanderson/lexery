@@ -6,10 +6,10 @@ class WordControl < Gosu::TextInput
   
   include Positioned
   
-  CARET_COLOR = Gosu::Color.new 0x996666FF
-  TEXT_COLOR =  Gosu::Color.new 0x996666FF
-  VALID_COLOR = Gosu::Color.new 0xCC66FF66
-  INVALID_COLOR = Gosu::Color.new 0xCCFF6666
+  CARET_COLOR     = Gosu::Color.new 0x996666FF
+  TEXT_COLOR      = Gosu::Color.new 0x996666FF
+  VALID_COLOR     = Gosu::Color.new 0xCC66DD66
+  INVALID_COLOR   = Gosu::Color.new 0xCCFF6666
   SELECTION_COLOR = Gosu::Color.new 0x330000FF
   
   def initialize(x,y,word)
