@@ -43,9 +43,20 @@ class TitleScreen < AbstractScreen
     
     add Button.new(10, height - 32, "Quit"){
       window.close
-    }
+    }    
   end
-    
+  
+  def draw
+    super
+    # Draw the decoration around the instructions:
+    top = @word.top - @word.height * 1.4
+    bottom = @word.bottom + @word.height * 0.2
+    window.draw_quad 0, top,          0x66ffffff,   
+                     width, top,      0x66ffffff,
+                     0, bottom,       0x66ffffff,
+                     width, bottom,   0x66ffffff
+  end
+  
   def button_down(id)
     case id
     when Gosu::KbEscape:  window.close
