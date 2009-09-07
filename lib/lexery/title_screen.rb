@@ -71,7 +71,7 @@ class TitleScreen < AbstractScreen
   def message(text, options={})
     label = Label.new(@word.left, @word.top - @word.height * 1.2, text)
     Move.insert(label, :to=>[label.x, -label.height], :delay=>3000, :in=>1000, :mode=>:ease_in_quad, :after=>lambda{remove label})
-    Fade[label, {:to=>:out, :delay=>3000, :mode=>:ease_in_quad}]
+    Fade[label, {:to=>:out, :delay=>2500, :mode=>:ease_in_quad}]
   end
   
   def word(text)
