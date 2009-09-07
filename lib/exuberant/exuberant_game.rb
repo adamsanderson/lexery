@@ -15,7 +15,7 @@ class ExuberantGame
     
     def load_sound(name)
       @sounds ||= {}
-      @sounds[name] ||= Gosu::Sample.new window, File.join(GAME_ROOT, name)
+      @sounds[name] ||= Gosu::Sample.new window, File.join(GAME_ROOT,'sounds', name)
     end
     
     def load_font(name, size)

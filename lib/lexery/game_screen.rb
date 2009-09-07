@@ -9,6 +9,10 @@ class GameScreen < AbstractScreen
     @imaginary_words = []
     @duration = Game.options['duration']
     
+    @click_sound  = Game.load_sound 'click.wav'
+    @done_sound   = Game.load_sound 'bell.wav'
+    @accept_sound = Game.load_sound 'chick.wav'
+    
     add @status = Label.new(10, self.height - 32, "current word: #{word}", :height=>32)
     add score = Label.new(10, 10, :height=>16){"words: #{@words.length}"}
     add Label.new(10, score.bottom + 2, :height=>16){ "imaginary words remaining: #{@imaginary_count}" }
@@ -22,8 +26,11 @@ class GameScreen < AbstractScreen
           when @duration: message "Welcome"
           when 10:        remaining_label.color = Colors::WARNING
           when 5:         message "5 seconds remaining", :color=>Colors::WARNING
-          when 3,2,1:     message "#{remaining}",    :color=>Colors::WARNING
+                          @click_sound.play
+          when 4,3,2,1:   message "#{remaining}",    :color=>Colors::WARNING
+                          @click_sound.play
           when 0:         game_over
+                          @done_sound.play
         end
       }
       timer.start
@@ -74,7 +81,8 @@ class GameScreen < AbstractScreen
   def accept
     if @word_control.valid || (@imaginary_word && @imaginary_count > 0)
       word = @word_control.text
-
+      @accept_sound.play
+      
       if @imaginary_word
         @imaginary_words << word
         @imaginary_count -= 1
@@ -83,6 +91,8 @@ class GameScreen < AbstractScreen
       @words << word
       message word, :color=>(@imaginary_word ? Gosu::Color.new(128, 255,0,0) : nil )
       @word_control.word = word
+    else
+      #@reject_sound.play
     end
   end
   
