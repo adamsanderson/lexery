@@ -21,7 +21,9 @@ class Game < ExuberantGame
     
     def score_board
       @score_board ||= begin
-        path = File.join(GAME_ROOT, 'scores')
+        locations = [File.join(GAME_ROOT, 'scores'), File.join(ENV['HOME'],'.lexery_scores')]
+        # find a place where we can write the scores to
+        path = locations.find{|p| File.writable?(File.dirname(p))}
         ScoreBoard.new(path)
       end
     end

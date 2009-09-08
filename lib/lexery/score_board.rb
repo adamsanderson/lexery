@@ -3,7 +3,7 @@ require 'round'
 class ScoreBoard
   def initialize(path)
     @path = path
-    if File.exist? path
+    if path and File.exist?(path)
       @games = Marshal.load(File.read(path))
     else
       @games = {}
@@ -22,6 +22,8 @@ class ScoreBoard
   end
   
   def save!
+    return unless @path
+    
     File.open(@path,'w') do |io|
       Marshal.dump(@games,io)
     end
