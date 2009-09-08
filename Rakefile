@@ -1,4 +1,5 @@
 require 'rake'
+require 'set'
 
 begin
   require 'jeweler'
@@ -20,6 +21,28 @@ begin
 
 rescue LoadError
   puts "Jeweler not available. Install it for jeweler-related tasks with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+end
+
+desc "Rebuilds all the wordlists"
+task :wordlist do
+  Dir['wordlists/*.txt'].each do |source|
+    target = source.sub(/\.txt$/,'.set')
+    puts "Indexing: #{source}"
+
+    index = Set.new    
+    open(source, 'r') do |io|
+      io.each_line do |word|
+        word = word.chomp.downcase
+        index << word
+      end
+    end
+    
+    puts "Writing: #{target}"
+    open(target,'w') do |io|
+      Marshal.dump(index, io)
+    end
+    
+  end
 end
 
 task :default => :test
