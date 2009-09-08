@@ -45,4 +45,4 @@ task :wordlist do
   end
 end
 
-task :default => :test
+task :default => :build

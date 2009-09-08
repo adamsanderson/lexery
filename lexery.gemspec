@@ -56,7 +56,6 @@ Gem::Specification.new do |s|
      "lib/lexery/word_control.rb",
      "options.yml",
      "script/console",
-     "script/wordlist",
      "sounds/README",
      "sounds/bell.wav",
      "sounds/chick.wav",
