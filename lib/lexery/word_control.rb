@@ -25,6 +25,10 @@ class WordControl < Gosu::TextInput
     
     Game.window.text_input = self
   end
+  
+  def text
+    (super || '').downcase
+  end
       
   def word= new_word
     @width = @font.text_width(new_word)
